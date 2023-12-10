@@ -1,4 +1,4 @@
-package gameplay;
+package gameplay.Players;
 
 import com.sun.opengl.util.*;
 import java.awt.*;
