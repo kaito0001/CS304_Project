@@ -1,0 +1,229 @@
+Index: src/gameplay/GameGLEventListener.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package gameplay;\r\n\r\nimport javax.media.opengl.GL;\r\nimport javax.media.opengl.GLAutoDrawable;\r\nimport java.awt.event.KeyEvent;\r\nimport java.util.ArrayList;\r\nimport java.util.BitSet;\r\nimport java.util.Iterator;\r\n\r\npublic class GameGLEventListener extends AnimationListener {\r\n    /*\r\n    -----------------\r\n    CLASS VARIABLES\r\n    -----------------\r\n     */\r\n    boolean multiPlayer = true; // declare the user choice if the game is single or multiplayer\r\n\r\n    private final int MAX_WIDTH = 100, MAX_HEIGHT = 100; // set max height and width to translate sprites using integers\r\n\r\n    private final BitSet keyBits = new BitSet(256); // a bitset used to handle multi keys pressed at the same time\r\n\r\n    Player player1 = new Player(10,40); // initiating player1 at position (10,40)\r\n    Player player2 = new Player(10,60); // initiating player2 at position (10,60)\r\n\r\n    ArrayList<Bullet> bullets = new ArrayList<>(); // initiate an empty arraylist to track bullets\r\n\r\n    @Override\r\n    public void init(GLAutoDrawable glAutoDrawable) {\r\n        GL gl = glAutoDrawable.getGL();\r\n        gl.glClearColor(0f, 0f, 0f, 0f); // initiate background color\r\n\r\n    }\r\n\r\n    @Override\r\n    public void display(GLAutoDrawable glAutoDrawable) {\r\n        GL gl = glAutoDrawable.getGL();\r\n        gl.glClear(GL.GL_COLOR_BUFFER_BIT);\r\n        gl.glLoadIdentity();\r\n\r\n        handleKeyPress(); // handle input\r\n\r\n        DrawSprite(gl, player1.getX(), player1.getY(), 0,5,5,0,1f,0f,0f); // draw player1 at the specified x and y each frame\r\n\r\n        if(multiPlayer) { // check first if it's multiplayer\r\n            DrawSprite(gl, player2.getX(), player2.getY(), 0, 5, 5, 0, 0f, 1f, 0f); // draw player2 at the specified x and y each frame\r\n        }\r\n\r\n        Iterator<Bullet> iterator = bullets.iterator(); // making iterator of bullets to use its remove method to avoid \"ConcurrentModificationException\"\r\n        while (iterator.hasNext()) { // check if there are still elements\r\n            Bullet bullet = iterator.next(); // get next element as bullet\r\n\r\n            if (bullet.getX() < MAX_WIDTH) { // if bullet is still in the screen draw it then increment its x for next frame\r\n                DrawSprite(gl, bullet.getX(), bullet.getY(), 0, 5, 5, 0, 0f, 0f, 1f);\r\n                bullet.incrementX(1);\r\n\r\n            } else { // if not then remove the bullet to lower sources usage (performance)\r\n                iterator.remove();\r\n            }\r\n        }\r\n    }\r\n\r\n    public void DrawSprite(GL gl, int x, int y, int index, float xScale, float yScale, double angle,float red, float green, float blue) {\r\n\r\n        gl.glPushMatrix();\r\n        gl.glTranslated(x / (MAX_WIDTH / 2.0) - 1, y / (MAX_HEIGHT / 2.0) - 1, 0);\r\n        gl.glRotated(angle,0,0,1);\r\n        gl.glScaled(0.01 * xScale, 0.01 *yScale, 1);\r\n        //System.out.println(x +\" \" + y);\r\n        gl.glColor3f(red, green, blue);\r\n        gl.glBegin(GL.GL_POLYGON);\r\n        gl.glVertex2d(0.4, 0);\r\n        gl.glVertex2d(0, 0);\r\n        gl.glVertex2d(0, 0.4);\r\n        gl.glVertex2d(0.4, 0.4);\r\n        gl.glEnd();\r\n        gl.glPopMatrix();\r\n\r\n    }\r\n\r\n\r\n\r\n    @Override\r\n    public void reshape(GLAutoDrawable glAutoDrawable, int i, int i1, int i2, int i3) {\r\n\r\n    }\r\n\r\n    @Override\r\n    public void displayChanged(GLAutoDrawable glAutoDrawable, boolean b, boolean b1) {\r\n\r\n    }\r\n\r\n    public void handleKeyPress() {\r\n\r\n        /*\r\n        HANDLE PLAYER1 MOVEMENT AND ATTACK\r\n         */\r\n\r\n        if (isKeyPressed(KeyEvent.VK_UP)) {\r\n            if (player1.getY() < MAX_HEIGHT - 2) {\r\n                player1.incrementY(1);\r\n            }\r\n        }\r\n        if (isKeyPressed(KeyEvent.VK_DOWN)) {\r\n            if (player1.getY() > 0) {\r\n                player1.decrementY(1);\r\n            }\r\n        }\r\n        if (isKeyPressed(KeyEvent.VK_LEFT)) {\r\n            if (player1.getX() > 0) {\r\n                player1.decrementX(1);\r\n            }\r\n        }\r\n        if (isKeyPressed(KeyEvent.VK_RIGHT)) {\r\n            if (player1.getX() < MAX_WIDTH - 2) {\r\n                player1.incrementX(1);\r\n            }\r\n        }\r\n        if(isKeyPressed(KeyEvent.VK_L)){\r\n            bullets.add(new Bullet(player1.getX(), player1.getY()));\r\n        }\r\n\r\n        /*\r\n        HANDLE PLAYER2 MOVEMENT AND ATTACK\r\n         */\r\n        if (isKeyPressed(KeyEvent.VK_W)) {\r\n            if (player2.getY() < MAX_HEIGHT - 2) {\r\n                player2.incrementY(1);\r\n            }\r\n        }\r\n        if (isKeyPressed(KeyEvent.VK_S)) {\r\n            if (player2.getY() > 0) {\r\n                player2.decrementY(1);\r\n            }\r\n        }\r\n        if (isKeyPressed(KeyEvent.VK_A)) {\r\n            if (player2.getX() > 0) {\r\n                player2.decrementX(1);\r\n            }\r\n        }\r\n        if (isKeyPressed(KeyEvent.VK_D)) {\r\n            if (player2.getX() < MAX_WIDTH - 2) {\r\n                player2.incrementX(1);\r\n            }\r\n        }\r\n        if(isKeyPressed(KeyEvent.VK_G)){\r\n            bullets.add(new Bullet(player2.getX(), player2.getY()));\r\n        }\r\n\r\n    }\r\n\r\n    @Override\r\n    public void keyPressed(final KeyEvent event) {\r\n        int keyCode = event.getKeyCode(); // if a key is pressed get its code and store it in keyBits\r\n        keyBits.set(keyCode);\r\n\r\n    }\r\n\r\n    @Override\r\n    public void keyReleased(final KeyEvent event) {\r\n        int keyCode = event.getKeyCode(); // if a key is released get its code and remove it from keyBits\r\n        keyBits.clear(keyCode);\r\n\r\n    }\r\n\r\n    @Override\r\n    public void keyTyped(final KeyEvent event) {\r\n        // don't care\r\n    }\r\n\r\n    public boolean isKeyPressed(final int keyCode) {\r\n        return keyBits.get(keyCode); // return true if the wanted keyCode does exist in keyBits (is being pressed right now)\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/gameplay/GameGLEventListener.java b/src/gameplay/GameGLEventListener.java
+--- a/src/gameplay/GameGLEventListener.java	
++++ b/src/gameplay/GameGLEventListener.java	
+@@ -24,41 +24,13 @@
+ 
+     ArrayList<Bullet> bullets = new ArrayList<>(); // initiate an empty arraylist to track bullets
+ 
+-    @Override
+-    public void init(GLAutoDrawable glAutoDrawable) {
+-        GL gl = glAutoDrawable.getGL();
+-        gl.glClearColor(0f, 0f, 0f, 0f); // initiate background color
+-
+-    }
+-
+-    @Override
+-    public void display(GLAutoDrawable glAutoDrawable) {
+-        GL gl = glAutoDrawable.getGL();
+-        gl.glClear(GL.GL_COLOR_BUFFER_BIT);
+-        gl.glLoadIdentity();
+-
+-        handleKeyPress(); // handle input
+-
+-        DrawSprite(gl, player1.getX(), player1.getY(), 0,5,5,0,1f,0f,0f); // draw player1 at the specified x and y each frame
+-
+-        if(multiPlayer) { // check first if it's multiplayer
+-            DrawSprite(gl, player2.getX(), player2.getY(), 0, 5, 5, 0, 0f, 1f, 0f); // draw player2 at the specified x and y each frame
+-        }
+-
+-        Iterator<Bullet> iterator = bullets.iterator(); // making iterator of bullets to use its remove method to avoid "ConcurrentModificationException"
+-        while (iterator.hasNext()) { // check if there are still elements
+-            Bullet bullet = iterator.next(); // get next element as bullet
+-
+-            if (bullet.getX() < MAX_WIDTH) { // if bullet is still in the screen draw it then increment its x for next frame
+-                DrawSprite(gl, bullet.getX(), bullet.getY(), 0, 5, 5, 0, 0f, 0f, 1f);
+-                bullet.incrementX(1);
++//  ----------------------------------------------------------------------------------------------
+ 
+-            } else { // if not then remove the bullet to lower sources usage (performance)
+-                iterator.remove();
+-            }
+-        }
+-    }
+-
++    /*
++    -----------------
++    CLASS METHODS
++    -----------------
++     */
+     public void DrawSprite(GL gl, int x, int y, int index, float xScale, float yScale, double angle,float red, float green, float blue) {
+ 
+         gl.glPushMatrix();
+@@ -77,18 +49,6 @@
+ 
+     }
+ 
+-
+-
+-    @Override
+-    public void reshape(GLAutoDrawable glAutoDrawable, int i, int i1, int i2, int i3) {
+-
+-    }
+-
+-    @Override
+-    public void displayChanged(GLAutoDrawable glAutoDrawable, boolean b, boolean b1) {
+-
+-    }
+-
+     public void handleKeyPress() {
+ 
+         /*
+@@ -122,31 +82,88 @@
+         /*
+         HANDLE PLAYER2 MOVEMENT AND ATTACK
+          */
+-        if (isKeyPressed(KeyEvent.VK_W)) {
+-            if (player2.getY() < MAX_HEIGHT - 2) {
+-                player2.incrementY(1);
+-            }
+-        }
+-        if (isKeyPressed(KeyEvent.VK_S)) {
+-            if (player2.getY() > 0) {
+-                player2.decrementY(1);
+-            }
+-        }
+-        if (isKeyPressed(KeyEvent.VK_A)) {
+-            if (player2.getX() > 0) {
+-                player2.decrementX(1);
+-            }
+-        }
+-        if (isKeyPressed(KeyEvent.VK_D)) {
+-            if (player2.getX() < MAX_WIDTH - 2) {
+-                player2.incrementX(1);
+-            }
+-        }
+-        if(isKeyPressed(KeyEvent.VK_G)){
+-            bullets.add(new Bullet(player2.getX(), player2.getY()));
++        if (multiPlayer) {
++            if (isKeyPressed(KeyEvent.VK_W)) {
++                if (player2.getY() < MAX_HEIGHT - 2) {
++                    player2.incrementY(1);
++                }
++            }
++            if (isKeyPressed(KeyEvent.VK_S)) {
++                if (player2.getY() > 0) {
++                    player2.decrementY(1);
++                }
++            }
++            if (isKeyPressed(KeyEvent.VK_A)) {
++                if (player2.getX() > 0) {
++                    player2.decrementX(1);
++                }
++            }
++            if (isKeyPressed(KeyEvent.VK_D)) {
++                if (player2.getX() < MAX_WIDTH - 2) {
++                    player2.incrementX(1);
++                }
++            }
++            if(isKeyPressed(KeyEvent.VK_G)){
++                bullets.add(new Bullet(player2.getX(), player2.getY()));
++            }
+         }
++    }
++
++    /*
++    ---------------------------------
++    GLEventListener interface methods
++    ---------------------------------
++     */
++    @Override
++    public void init(GLAutoDrawable glAutoDrawable) {
++        GL gl = glAutoDrawable.getGL();
++        gl.glClearColor(0f, 0f, 0f, 0f); // initiate background color
+ 
+     }
++
++    @Override
++    public void display(GLAutoDrawable glAutoDrawable) {
++        GL gl = glAutoDrawable.getGL();
++        gl.glClear(GL.GL_COLOR_BUFFER_BIT);
++        gl.glLoadIdentity();
++
++        handleKeyPress(); // handle input
++
++        DrawSprite(gl, player1.getX(), player1.getY(), 0,5,5,0,1f,0f,0f); // draw player1 at the specified x and y each frame
++
++        if(multiPlayer) { // check first if it's multiplayer
++            DrawSprite(gl, player2.getX(), player2.getY(), 0, 5, 5, 0, 0f, 1f, 0f); // draw player2 at the specified x and y each frame
++        }
++
++        Iterator<Bullet> iterator = bullets.iterator(); // making iterator of bullets to use its remove method to avoid "ConcurrentModificationException"
++        while (iterator.hasNext()) { // check if there are still elements
++            Bullet bullet = iterator.next(); // get next element as bullet
++
++            if (bullet.getX() < MAX_WIDTH) { // if bullet is still in the screen draw it then increment its x for next frame
++                DrawSprite(gl, bullet.getX(), bullet.getY(), 0, 5, 5, 0, 0f, 0f, 1f);
++                bullet.incrementX(1);
++
++            } else { // if not then remove the bullet to lower sources usage (performance)
++                iterator.remove();
++            }
++        }
++    }
++
++    @Override
++    public void reshape(GLAutoDrawable glAutoDrawable, int i, int i1, int i2, int i3) {
++
++    }
++
++    @Override
++    public void displayChanged(GLAutoDrawable glAutoDrawable, boolean b, boolean b1) {
++
++    }
++
++    /*
++    -----------------------------
++    KeyListener interface methods
++    -----------------------------
++     */
+ 
+     @Override
+     public void keyPressed(final KeyEvent event) {
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"e5195603-3530-48d5-a70a-f76b21a806c8\" name=\"Changes\" comment=\"no pictures just 2 blocks firing bullets as blocks and the &quot;GameGLEventListener&quot; still needs some handling for performance&#10;  and clean code\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/gameplay/GameGLEventListener.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/gameplay/GameGLEventListener.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/gameplay/Player.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/gameplay/Player.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"master\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2Z4y6nnYdqRXAhVAF3G4bJHozCb\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/kaito/IdeaProjects/GunsGame&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;\r\n  }\r\n}</component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"e5195603-3530-48d5-a70a-f76b21a806c8\" name=\"Changes\" comment=\"\" />\r\n      <created>1701695482115</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1701695482115</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"no pictures just 2 blocks firing bullets as blocks and the &quot;GameGLEventListener&quot; still needs some handling for performance&#10;  and clean code\">\r\n      <created>1701841389218</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1701841389218</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"2\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"making_player\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"no pictures just 2 blocks firing bullets as blocks and the &quot;GameGLEventListener&quot; still needs some handling for performance&#10;  and clean code\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"no pictures just 2 blocks firing bullets as blocks and the &quot;GameGLEventListener&quot; still needs some handling for performance&#10;  and clean code\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -4,10 +4,9 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="e5195603-3530-48d5-a70a-f76b21a806c8" name="Changes" comment="no pictures just 2 blocks firing bullets as blocks and the &quot;GameGLEventListener&quot; still needs some handling for performance&#10;  and clean code">
++    <list default="true" id="e5195603-3530-48d5-a70a-f76b21a806c8" name="Changes" comment="clean code fixed and increased performance a bit (removing bullets whenever they go outside the screen) &#10;#iterator has been used to avoid errors#">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/gameplay/GameGLEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/GameGLEventListener.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/gameplay/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/Player.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -43,7 +42,7 @@
+     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+-    &quot;last_opened_file_path&quot;: &quot;C:/Users/kaito/IdeaProjects/GunsGame&quot;,
++    &quot;last_opened_file_path&quot;: &quot;C:/Users/kaito/IdeaProjects/DivideAnConquer&quot;,
+     &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+@@ -93,6 +92,7 @@
+   </component>
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="no pictures just 2 blocks firing bullets as blocks and the &quot;GameGLEventListener&quot; still needs some handling for performance&#10;  and clean code" />
+-    <option name="LAST_COMMIT_MESSAGE" value="no pictures just 2 blocks firing bullets as blocks and the &quot;GameGLEventListener&quot; still needs some handling for performance&#10;  and clean code" />
++    <MESSAGE value="clean code fixed and increased performance a bit (removing bullets whenever they go outside the screen) &#10;#iterator has been used to avoid errors#" />
++    <option name="LAST_COMMIT_MESSAGE" value="clean code fixed and increased performance a bit (removing bullets whenever they go outside the screen) &#10;#iterator has been used to avoid errors#" />
+   </component>
+ </project>
+\ No newline at end of file
