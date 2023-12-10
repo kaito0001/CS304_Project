@@ -3,7 +3,9 @@ package gameplay.Players;
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.glu.GLU;
+import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.BitSet;
 import java.util.Iterator;
@@ -15,6 +17,13 @@ public class GameGLEventListener extends AnimationListener {
     CLASS VARIABLES
     -----------------
      */
+    int loginIndex=51;
+    String current ="home";
+    boolean mute=false;
+    boolean easy=true;
+    boolean medium=false;
+    boolean hard=false;
+
     boolean multiPlayer = true; // declare the user choice if the game is single or multiplayer
 
     private final int MAX_WIDTH = 100, MAX_HEIGHT = 100; // set max height and width to translate sprites using integers
@@ -40,7 +49,9 @@ public class GameGLEventListener extends AnimationListener {
             "Player2//P2move15.png", "Player2//P2move16.png", "Player2//P2move17.png", "Player2//P2move18.png", "Player2//P2move19.png",
 
             // bullet picture
-            "Bullet.png"
+            "Bullet.png",
+            "Views/Home.png","Buttons/Play.png","Buttons/Help.png","Buttons/About US.png","Buttons/Exit.png","Buttons/Music.png","Buttons/Mute.png"
+            ,"Views/Menus/MultiPlayer.png","Views/Menus/Help.png","Views/Menus/Levels.png","Views/Menus/Login of One Player.png","Views/Menus/Login of Two Players.png","Views/Menus/About_US.png"
     };
 
     // pictures indexes
@@ -233,8 +244,95 @@ public class GameGLEventListener extends AnimationListener {
                 player2.drawPlayer(gl, player2.getX(), player2.getY(), player2Move[player2AnimationIndex], 10, 10); // draw player2 at the specified x and y each frame
             }
         }
+
 //      ----------------------------------------------------draw players------------------------------------------------------
+
     }
+    public void DrawBackGound(GL gl,int x, int y, int index){
+        gl.glEnable(GL.GL_BLEND);
+        gl.glBindTexture(GL.GL_TEXTURE_2D, textures[index]);
+        gl.glPushMatrix();
+//        gl.glTranslated( x/(MAX_WIDTH/2.0) - 1, y/(MAX_HEIGHT/2.0) - 1, 0);
+//        System.out.println(x +" " + y);
+        gl.glBegin(GL.GL_QUADS);
+        // Front Face
+        gl.glTexCoord2f(0.0f, 0.0f);
+        gl.glVertex3f(-1.0f, -1.0f, -1.0f);
+        gl.glTexCoord2f(1.0f, 0.0f);
+        gl.glVertex3f(1.0f, -1.0f, -1.0f);
+        gl.glTexCoord2f(1.0f, 1.0f);
+        gl.glVertex3f(1.0f, 1.0f, -1.0f);
+        gl.glTexCoord2f(0.0f, 1.0f);
+        gl.glVertex3f(-1.0f, 1.0f, -1.0f);
+        gl.glEnd();
+        gl.glPopMatrix();
+
+        gl.glDisable(GL.GL_BLEND);
+    }
+    //-----------------------------------------------------draw backGround function-------------------------------------------------------
+
+    public void DrawSprite(GL gl,int x, int y, int index, float scaleX,float scaleY){
+        gl.glEnable(GL.GL_BLEND);
+        gl.glBindTexture(GL.GL_TEXTURE_2D, textures[index]);
+        gl.glPushMatrix();
+        gl.glTranslated( x/(MAX_WIDTH/2.0) - 1, y/(MAX_HEIGHT/2.0) - 1, 0);
+        gl.glScaled(0.1*scaleX, 0.1*scaleY, 1);
+//        System.out.println(x +" " + y);
+        gl.glBegin(GL.GL_QUADS);
+        // Front Face
+        gl.glTexCoord2f(0.0f, 0.0f);
+        gl.glVertex3f(-1.0f, -1.0f, -1.0f);
+        gl.glTexCoord2f(1.0f, 0.0f);
+        gl.glVertex3f(1.0f, -1.0f, -1.0f);
+        gl.glTexCoord2f(1.0f, 1.0f);
+        gl.glVertex3f(1.0f, 1.0f, -1.0f);
+        gl.glTexCoord2f(0.0f, 1.0f);
+        gl.glVertex3f(-1.0f, 1.0f, -1.0f);
+        gl.glEnd();
+        gl.glPopMatrix();
+
+        gl.glDisable(GL.GL_BLEND);
+    }
+    //-----------------------------------------------------draw sprite function-------------------------------------------------------
+
+
+    public void currentPage(GL gl){
+        if (current.equals("home")) {
+            DrawBackGound(gl, 0, 0, 41);
+            DrawSprite(gl, 50, 47, 42, 2, 1);
+            DrawSprite(gl, 50, 37, 43, 2, 1);
+            DrawSprite(gl, 50, 27, 44, 2, 1);
+            DrawSprite(gl, 50, 17, 45, 2, 1);
+            DrawSprite(gl, 45, 55, 46, 1, 1);
+            DrawSprite(gl, 55, 55, 47, 1, 1);
+        }
+        if (current.equals("player")){
+            DrawBackGound(gl, 0, 0, 41);
+            DrawSprite(gl, 50, 47, 48, 6, 7);
+        }
+        if (current.equals("help")) {
+            DrawBackGound(gl, 0, 0, 41);
+            DrawSprite(gl, 50, 50, 49, 6, 7);
+
+        }
+        if (current.equals("about")) {
+            DrawBackGound(gl, 0, 0, 41);
+            DrawSprite(gl, 50, 50, 53, 6, 7);
+
+        }
+
+        if (current.equals("levels")){
+            DrawBackGound(gl, 0, 0, 41);
+            DrawSprite(gl, 50, 47, 50, 6, 7);
+        }
+        if (current.equals("login")) {
+            DrawBackGound(gl, 0, 0, 41);
+            DrawSprite(gl, 50, 50, loginIndex, 6, 7);
+
+        }
+    }
+    //-----------------------------------------------------check the current page and draw it -------------------------------------------------------
+
 
     @Override
     public void reshape(GLAutoDrawable glAutoDrawable, int i, int i1, int i2, int i3) {
@@ -269,5 +367,88 @@ public class GameGLEventListener extends AnimationListener {
         // don't care
     }
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+//----------------------------------------------------------------------------------------------------------------------------------
+    @Override
+    public void mousePressed(MouseEvent e) {
+        double x = e.getX();
+        double y = e.getY();
+        Component c = e.getComponent();
+        double width = c.getWidth();
+        double height = c.getHeight();
+        int Xclick = (int) ((x / width) * 100) ;
+        int Yclick =  (int) (100 * y / height);
+        Yclick=100-Yclick;
+        System.out.println(Xclick+","+Yclick);
+        if(current.equals("home")) {
+            if (Xclick >= 40 && Xclick <= 57 && Yclick >= 45 && Yclick <= 50) {
+                current = "player";
+            }
+            else if (Xclick >= 40 && Xclick <= 57 && Yclick <= 40 && Yclick >= 35) {
+                current = "help";
+            }else if (Xclick >= 40 && Xclick <= 57 && Yclick <= 30 && Yclick >= 25) {
+                current ="about";
+            } else if (Xclick >= 40 && Xclick <= 57 && Yclick <= 20 && Yclick >= 15) {
+                System.exit(0);
+            }
+        } else if (current.equals("player")) {
+            if (Xclick >= 40 && Xclick <= 57 && Yclick >= 45 && Yclick <= 50) {
+                current = "levels";
+            }
+            else if (Xclick >= 40 && Xclick <= 57 && Yclick >= 37&&Yclick <= 43 ) {
+                current = "levels";
+                multiPlayer=true;
+            }else if (Xclick >= 63 && Xclick <= 69 && Yclick >= 75&&Yclick <= 79 ) {
+                current = "home";
+                multiPlayer=true;
+                loginIndex=11;
+            }
+        }else if (current.equals("levels")) {
+            if (Xclick >= 38 && Xclick <= 62 && Yclick >= 53 && Yclick <= 59) {
+                current = "login";
+                easy=true;
+            }
+            else if (Xclick >= 38 && Xclick <= 62 && Yclick <= 50 && Yclick >= 45) {
+                current = "login";
+                medium=true;
+            } else if (Xclick >= 38 && Xclick <= 62 && Yclick <= 42 && Yclick >= 38) {
+                current = "login";
+                hard=true;
+            }else if (Xclick >= 63 && Xclick <= 69 && Yclick >= 75&&Yclick <= 79 ) {
+                current = "player";
+                multiPlayer=true;
+                loginIndex=52;
+            }
+        }else if (current.equals("help")) {
+            if (Xclick >= 69 && Xclick <= 72 && Yclick >= 77&&Yclick <= 81 ) {
+                current = "home";
+
+
+            }
+
+        }
+    }
+
+        //-----------------------------------------------------------------buttons check -----------------------------------------------------------------
+
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
 }
 

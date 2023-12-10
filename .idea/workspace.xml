@@ -5,39 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5195603-3530-48d5-a70a-f76b21a806c8" name="Changes" comment="1- moved drawing function to the Player class&#10;2- added pictures of players and bullets&#10;3- handled fire spreading">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Texture/BitmapLoader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Texture/ResourceRetriever.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Texture/TextureReader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gameplay/Players/Bullet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gameplay/Players/GameGLEventListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gameplay/Players/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_6_2023_8_57_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_6_2023_8_57_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_6_2023_9_03_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_6_2023_9_03_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_7_2023_1_00_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_7_2023_1_00_AM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move0.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Player2/P2move0.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move1.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Player2/P2move1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move10.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Player2/P2move10.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move11.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Player2/P2move11.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move12.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Player2/P2move12.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move13.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Player2/P2move13.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move14.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Player2/P2move14.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move15.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Player2/P2move15.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move16.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Player2/P2move16.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move17.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Player2/P2move17.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move18.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Player2/P2move18.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move19.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Player2/P2move19.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move2.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Player2/P2move2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move3.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Player2/P2move3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move4.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Player2/P2move4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move5.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Player2/P2move5.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move6.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Player2/P2move6.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move7.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Player2/P2move7.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move8.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Player2/P2move8.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move9.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Player2/P2move9.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameplay/Animation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/Players/Animation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameplay/AnimationListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/Players/AnimationListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameplay/Bullet.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameplay/GameGLEventListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameplay/Player.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameplay/Players/Animation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/Players/Animation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameplay/Players/AnimationListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/Players/AnimationListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameplay/Players/GameGLEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/Players/GameGLEventListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +41,9 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 0
+}]]></component>
   <component name="ProjectId" id="2Z4y6nnYdqRXAhVAF3G4bJHozCb" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -77,10 +55,17 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "git304",
     "last_opened_file_path": "C:/Users/kaito/IdeaProjects/GunsGame/src/gameplay",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -97,6 +82,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1701695482115</updated>
+      <workItem from="1702247688411" duration="2060000" />
     </task>
     <task id="LOCAL-00001" summary="Adding assets for players and zombies (Sherif Omar)">
       <created>1702217415739</created>
@@ -107,6 +93,9 @@
     </task>
     <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
