@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e5195603-3530-48d5-a70a-f76b21a806c8" name="Changes" comment="1- moved drawing function to the Player class&#10;2- added pictures of players and bullets&#10;3- handled fire spreading">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_6_2023_8_57_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_6_2023_8_57_PM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_6_2023_9_03_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_6_2023_9_03_PM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_7_2023_1_00_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_7_2023_1_00_AM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameplay/Players/Animation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/Players/Animation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameplay/Players/Bullet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/Players/Bullet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameplay/Players/GameGLEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/Players/GameGLEventListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameplay/Players/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/Players/Player.java" afterDir="false" />
-    </list>
+    <list default="true" id="e5195603-3530-48d5-a70a-f76b21a806c8" name="Changes" comment="merged menus with players" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -92,7 +83,14 @@
       <option name="project" value="LOCAL" />
       <updated>1702217415739</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="merged menus with players">
+      <created>1702297806402</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1702297806402</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -125,6 +123,7 @@
     <MESSAGE value="no pictures just 2 blocks firing bullets as blocks and the &quot;GameGLEventListener&quot; still needs some handling for performance&#10;  and clean code" />
     <MESSAGE value="Adding assets for players and zombies (Sherif Omar)" />
     <MESSAGE value="1- moved drawing function to the Player class&#10;2- added pictures of players and bullets&#10;3- handled fire spreading" />
-    <option name="LAST_COMMIT_MESSAGE" value="1- moved drawing function to the Player class&#10;2- added pictures of players and bullets&#10;3- handled fire spreading" />
+    <MESSAGE value="merged menus with players" />
+    <option name="LAST_COMMIT_MESSAGE" value="merged menus with players" />
   </component>
 </project>
