@@ -1,0 +1,66 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"e5195603-3530-48d5-a70a-f76b21a806c8\" name=\"Changes\" comment=\"no pictures just 2 blocks firing bullets as blocks and the &quot;GameGLEventListener&quot; still needs some handling for performance&#10;  and clean code\">\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/libraries/lib64.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/gameplay/Animation.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/gameplay/AnimationListener.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/gameplay/Bullet.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/gameplay/GameGLEventListener.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/gameplay/Player.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/GunsGame.iml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/GunsGame.iml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"39731d6f1091043861c4d8e44d80c46e8f059945\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2Z4y6nnYdqRXAhVAF3G4bJHozCb\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"last_opened_file_path\": \"C:/Users/kaito/IdeaProjects/GunsGame\",\r\n    \"project.structure.last.edited\": \"Libraries\",\r\n    \"project.structure.proportion\": \"0.0\",\r\n    \"project.structure.side.proportion\": \"0.0\"\r\n  }\r\n}]]></component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"e5195603-3530-48d5-a70a-f76b21a806c8\" name=\"Changes\" comment=\"\" />\r\n      <created>1701695482115</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1701695482115</updated>\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"making_player\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"no pictures just 2 blocks firing bullets as blocks and the &quot;GameGLEventListener&quot; still needs some handling for performance&#10;  and clean code\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"no pictures just 2 blocks firing bullets as blocks and the &quot;GameGLEventListener&quot; still needs some handling for performance&#10;  and clean code\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 422381405970ce24913eb5d4ade6a54224136937)
++++ b/.idea/workspace.xml	(date 1701903116965)
+@@ -4,16 +4,7 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="e5195603-3530-48d5-a70a-f76b21a806c8" name="Changes" comment="no pictures just 2 blocks firing bullets as blocks and the &quot;GameGLEventListener&quot; still needs some handling for performance&#10;  and clean code">
+-      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib64.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/gameplay/Animation.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/gameplay/AnimationListener.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/gameplay/Bullet.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/gameplay/GameGLEventListener.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/gameplay/Player.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/GunsGame.iml" beforeDir="false" afterPath="$PROJECT_DIR$/GunsGame.iml" afterDir="false" />
+-    </list>
++    <list default="true" id="e5195603-3530-48d5-a70a-f76b21a806c8" name="Changes" comment="fixed clean code and improved performance (removing bullets when they go out of the screen)&#10;and some other improvements in logic (better handling for if statements)" />
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -43,17 +34,17 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+-    "last_opened_file_path": "C:/Users/kaito/IdeaProjects/GunsGame",
+-    "project.structure.last.edited": "Libraries",
+-    "project.structure.proportion": "0.0",
+-    "project.structure.side.proportion": "0.0"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
++    &quot;last_opened_file_path&quot;: &quot;C:/Users/kaito/IdeaProjects/GunsGame&quot;,
++    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
++    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
++    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">
+@@ -90,6 +81,7 @@
+   </component>
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="no pictures just 2 blocks firing bullets as blocks and the &quot;GameGLEventListener&quot; still needs some handling for performance&#10;  and clean code" />
+-    <option name="LAST_COMMIT_MESSAGE" value="no pictures just 2 blocks firing bullets as blocks and the &quot;GameGLEventListener&quot; still needs some handling for performance&#10;  and clean code" />
++    <MESSAGE value="fixed clean code and improved performance (removing bullets when they go out of the screen)&#10;and some other improvements in logic (better handling for if statements)" />
++    <option name="LAST_COMMIT_MESSAGE" value="fixed clean code and improved performance (removing bullets when they go out of the screen)&#10;and some other improvements in logic (better handling for if statements)" />
+   </component>
+ </project>
+\ No newline at end of file
