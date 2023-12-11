@@ -25,6 +25,10 @@ public class GameGLEventListener extends AnimationListener {
     boolean helpInGame=false;
     Menus UI = new Menus();
 
+    // game timer
+    private int timer = 0;
+    private int timerHandler = 0;
+
     public static final int MAX_WIDTH = 100, MAX_HEIGHT = 100; // set max height and width to translate sprites using integers
 
 
@@ -97,6 +101,15 @@ public class GameGLEventListener extends AnimationListener {
     CLASS METHODS
     -----------------
      */
+
+    void handleTimer(){
+        timerHandler++;
+        if(timerHandler == 24){
+            timer++;
+            timerHandler = 0;
+        }
+    }
+    
     public boolean isKeyPressed(final int keyCode) {
         return keyBits.get(keyCode); // return true if the wanted keyCode does exist in keyBits (is being pressed right now)
     }
@@ -236,7 +249,8 @@ public class GameGLEventListener extends AnimationListener {
             }
             DrawBackGround(gl);
             DrawSprite(gl, 95, 95, 71, 1, 1);
-
+            
+            handleTimer();
 //      ----------------------------------------------------draw player1 bullets------------------------------------------------------
             Iterator<Bullet> iterator1 = player1.getBullets().iterator(); // making iterator of bullets to use its remove method to avoid "ConcurrentModificationException"
             while (iterator1.hasNext()) { // check if there are still elements
