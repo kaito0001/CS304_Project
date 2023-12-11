@@ -18,7 +18,9 @@ public class GameGLEventListener extends AnimationListener {
     CLASS VARIABLES
     -----------------
      */
-
+    boolean paused=false;
+    String pause="playing";
+    boolean helpInGame=false;
     Menus UI = new Menus();
 
     public static final int MAX_WIDTH = 100, MAX_HEIGHT = 100; // set max height and width to translate sprites using integers
@@ -28,7 +30,6 @@ public class GameGLEventListener extends AnimationListener {
     Player player1 = new Player(21,40); // initiating player1 at position (21,40)
     Player player2 = new Player(21,60); // initiating player2 at position (21,60)
 
-    boolean playing = false;
 
 //    ArrayList<Bullet> bullets = new ArrayList<>(); // initiate an empty arraylist to track bullets
 
@@ -50,7 +51,7 @@ public class GameGLEventListener extends AnimationListener {
 
             // menus pictures
             "Views/Home.png","Buttons/Play.png","Buttons/Help.png","Buttons/About US.png","Buttons/Exit.png","Buttons/Music.png","Buttons/Mute.png"
-            ,"Views/Menus/MultiPlayer.png","Views/Menus/Help.png","Views/Menus/Levels.png","Views/Menus/Login of One Player.png","Views/Menus/Login of Two Players.png","Views/Menus/About_US.png",
+            ,"Views/Menus/MultiPlayer.png","Views/Menus/Help.png","Views/Menus/Levels.png","Views/Menus/Login of One Player.png","Views/Menus/Login of Two Players.png","Views/Menus/About_US.png","Buttons/Pause.png","Views/Menus/Pause.png",
 
             // backGround picture
             "Night.png"
@@ -172,7 +173,7 @@ public class GameGLEventListener extends AnimationListener {
     @Override
     public void init(GLAutoDrawable glAutoDrawable) {
         GL gl = glAutoDrawable.getGL();
-        gl.glClearColor(1.0f, 0f, 0f, 1.0f);    //This Will Clear The Background Color To Black
+        gl.glClearColor(0f, 0f, 0f, 1.0f);    //This Will Clear The Background Color To Black
 
         gl.glEnable(GL.GL_TEXTURE_2D);  // Enable Texture Mapping
         gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
@@ -205,55 +206,76 @@ public class GameGLEventListener extends AnimationListener {
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);
         gl.glLoadIdentity();
 
-            UI.currentPage(gl);
+        UI.currentPage(gl);
 
         if(UI.getCurrent().equals("game")) {
-            handleKeyPress(); // handle input
+           if (!paused){
+               handleKeyPress(); // handle input
+           }
             DrawBackGround(gl);
+            DrawSprite(gl, 95, 95, 54, 1, 1);
+
+
 //      ----------------------------------------------------draw player1 bullets------------------------------------------------------
-            Iterator<Bullet> iterator1 = player1.getBullets().iterator(); // making iterator of bullets to use its remove method to avoid "ConcurrentModificationException"
-            while (iterator1.hasNext()) { // check if there are still elements
-                Bullet bullet = iterator1.next(); // get next element as bullet
+                Iterator<Bullet> iterator1 = player1.getBullets().iterator(); // making iterator of bullets to use its remove method to avoid "ConcurrentModificationException"
+                while (iterator1.hasNext()) { // check if there are still elements
+                    Bullet bullet = iterator1.next(); // get next element as bullet
 
-                if (bullet.getX() < MAX_WIDTH) { // if bullet is still in the screen draw it then increment its x for next frame
-                    bullet.drawBullet(gl, bullet.getX(), bullet.getY(), 40, 3, 3);
-                    bullet.move(1);
+                    if (bullet.getX() < MAX_WIDTH) { // if bullet is still in the screen draw it then increment its x for next frame
+                        bullet.drawBullet(gl, bullet.getX(), bullet.getY(), 40, 3, 3);
+                       if (!paused){
+                           bullet.move(1);
+                       }
 
-                } else { // if not then remove the bullet to lower sources usage (performance)
-                    iterator1.remove();
+                    } else { // if not then remove the bullet to lower sources usage (performance)
+                        iterator1.remove();
+                    }
+
                 }
-
-            }
 //      ----------------------------------------------------draw player1 bullets------------------------------------------------------
 
 //      ----------------------------------------------------draw player2 bullets------------------------------------------------------
-            Iterator<Bullet> iterator2 = player2.getBullets().iterator(); // making iterator of bullets to use its remove method to avoid "ConcurrentModificationException"
-            while (iterator2.hasNext()) { // check if there are still elements
-                Bullet bullet = iterator2.next(); // get next element as bullet
+                Iterator<Bullet> iterator2 = player2.getBullets().iterator(); // making iterator of bullets to use its remove method to avoid "ConcurrentModificationException"
+                while (iterator2.hasNext()) { // check if there are still elements
+                    Bullet bullet = iterator2.next(); // get next element as bullet
 
-                if (bullet.getX() < MAX_WIDTH) { // if bullet is still in the screen draw it then increment its x for next frame
-                    bullet.drawBullet(gl, bullet.getX(), bullet.getY(), 40, 3, 3);
-                    bullet.move(1);
-
-                } else { // if not then remove the bullet to lower sources usage (performance)
-                    iterator2.remove();
+                    if (bullet.getX() < MAX_WIDTH) { // if bullet is still in the screen draw it then increment its x for next frame
+                        bullet.drawBullet(gl, bullet.getX(), bullet.getY(), 40, 3, 3);
+                        if (!paused) {
+                            bullet.move(1);
+                        }
+                    } else { // if not then remove the bullet to lower sources usage (performance)
+                        iterator2.remove();
+                    }
                 }
-            }
 //      ----------------------------------------------------draw player2 bullets------------------------------------------------------
 
 //      ----------------------------------------------------draw players------------------------------------------------------
-            if(player1.isAlive()) { // checks if player2 is alive before drawing
-                player1.drawPlayer(gl, player1.getX(), player1.getY(), player1Move[player1AnimationIndex], 10, 10); // draw player1 at the specified x and y each frame
-            }
-            if(UI.isMultiPlayer()) { // check first if it's multiplayer
-                if (player2.isAlive()) { // checks if player2 is alive before drawing
-                    player2.drawPlayer(gl, player2.getX(), player2.getY(), player2Move[player2AnimationIndex], 10, 10); // draw player2 at the specified x and y each frame
+
+                if (player1.isAlive()) { // checks if player2 is alive before drawing
+                    player1.drawPlayer(gl, player1.getX(), player1.getY(), player1Move[player1AnimationIndex], 10, 10); // draw player1 at the specified x and y each frame
                 }
-            }
+                if (UI.isMultiPlayer()) { // check first if it's multiplayer
+                    if (player2.isAlive()) { // checks if player2 is alive before drawing
+                        player2.drawPlayer(gl, player2.getX(), player2.getY(), player2Move[player2AnimationIndex], 10, 10); // draw player2 at the specified x and y each frame
+                    }
+                }
 //      ----------------------------------------------------draw players------------------------------------------------------
-        }
+            if (paused&&!helpInGame) {
+                DrawSprite(gl, 50, 50, 55, 6, 7);
+            }
+            if (helpInGame) {
+                DrawSprite(gl, 50, 50, 49, 6, 7);
+
+            }
+            }
+
+
     }
-
+    public void resetGame(){
+        player1.getBullets().clear();
+        player2.getBullets().clear();
+    }
     public void DrawBackGround(GL gl) {
         gl.glEnable(GL.GL_BLEND);
         gl.glBindTexture(GL.GL_TEXTURE_2D, textures[textures.length - 1]);
@@ -350,8 +372,8 @@ public class GameGLEventListener extends AnimationListener {
         // get click position
         int xClick = (int)((x / width) * 100);
         int yClick = 100 - (int)(100 * y / height);
-//        System.out.println(xClick);
-//        System.out.println(yClick);
+        System.out.println(xClick+","+yClick);
+
 
 //      ------------------------------handle home page buttons-------------------------------
         switch (UI.getCurrent()) {
@@ -432,8 +454,47 @@ public class GameGLEventListener extends AnimationListener {
                     UI.setCurrent("game");
                 }
             }
+            case "game" -> {
+                if (xClick >= 91 && xClick <= 98 && yClick >= 91 && yClick <= 100) { // pause button has been clicked
+                    paused=true;
+                    pause="pause";
+
+
+                }
+            }
+
+
+
         }
-//      ------------------------------handle login credits buttons----------------------------
+//      --------------------------------------- handel pause button ----------------------------------------------------
+        if (pause.equals("pause")&&!helpInGame) {
+            if (xClick >= 63 && xClick <= 69 && yClick >= 78 && yClick <= 83) { // exit button has been clicked
+                UI.setCurrent("game");
+                paused = false;
+                pause="playing";
+
+            }else if (xClick >= 38 && xClick <= 62 && yClick >= 56 && yClick <= 62){// resume button
+                paused=false;
+            }else if (xClick >= 38 && xClick <= 62 && yClick >= 48 && yClick <= 54){// help in game button
+                helpInGame=true;
+            }else if (xClick >= 38 && xClick <= 62 && yClick >= 40 && yClick <= 45){// back to home menu button
+                UI.setCurrent("home");
+                pause="playing";
+                paused=false;
+                resetGame();
+            }else if (xClick >= 51 && xClick <= 58 && yClick >= 32 && yClick <= 37){// mute button
+
+            }else if (xClick >= 41 && xClick <= 48 && yClick >= 31 && yClick <= 37){//music button
+
+            }
+        }
+        if (helpInGame){
+            if (xClick >= 69 && xClick <= 72 && yClick >= 76 && yClick <= 80) { // exit button has been clicked
+                helpInGame=false;
+
+            }
+        }
+//      --------------------------------------- handel pause button ----------------------------------------------------
     }
 
 //  ---------------------------------------------buttons check -----------------------------------------------------------------
