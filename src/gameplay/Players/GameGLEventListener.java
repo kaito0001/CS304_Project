@@ -7,10 +7,12 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Iterator;
 import Texture.*;
 import UI.Menus;
+import gameplay.zombies.Zombie;
 
 public class GameGLEventListener extends AnimationListener {
     /*
@@ -23,7 +25,12 @@ public class GameGLEventListener extends AnimationListener {
 
     public static final int MAX_WIDTH = 100, MAX_HEIGHT = 100; // set max height and width to translate sprites using integers
 
+
     private final BitSet keyBits = new BitSet(256); // a bitset used to handle multi keys pressed at the same time
+
+    ArrayList<Zombie> zombies =new ArrayList<>(); // array that generate zombies in the screen
+
+    int check[]= new int[8];
 
     Player player1 = new Player(21,40); // initiating player1 at position (21,40)
     Player player2 = new Player(21,60); // initiating player2 at position (21,60)
@@ -52,15 +59,26 @@ public class GameGLEventListener extends AnimationListener {
             "Views/Home.png","Buttons/Play.png","Buttons/Help.png","Buttons/About US.png","Buttons/Exit.png","Buttons/Music.png","Buttons/Mute.png"
             ,"Views/Menus/MultiPlayer.png","Views/Menus/Help.png","Views/Menus/Levels.png","Views/Menus/Login of One Player.png","Views/Menus/Login of Two Players.png","Views/Menus/About_US.png",
 
+            //zombie pics
+            "Zombie//Zmove0.png","Zombie//Zmove1.png","Zombie//Zmove2.png","Zombie//Zmove3.png","Zombie//Zmove4.png"
+            ,"Zombie//Zmove5.png","Zombie//Zmove6.png","Zombie//Zmove7.png","Zombie//Zmove8.png","Zombie//Zmove9.png"
+            ,"Zombie//Zmove10.png","Zombie//Zmove11.png","Zombie//Zmove12.png","Zombie//Zmove13.png","Zombie//Zmove14.png"
+            ,"Zombie//Zmove15.png","Zombie//Zmove16.png",
+
             // backGround picture
             "Night.png"
+
     };
 
     // pictures indexes
     int[] player1Move = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,16, 17, 18, 19},
-          player2Move = {20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39};
+          player2Move = {20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39},
+
+            zombieMove  ={54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70};
 
     int player1AnimationIndex = 0, player2AnimationIndex = 0; // players animation indexes to change pictures while moving
+
+    int zombieAnimationIndex=0; //zombies animation indexes to change pictures while moving
 
 
     // preparing the pictures to be rendered and used
@@ -251,6 +269,49 @@ public class GameGLEventListener extends AnimationListener {
                 }
             }
 //      ----------------------------------------------------draw players------------------------------------------------------
+
+            for ( int i = 0; i < 8; ++i) {
+                if (check[i] == 0) {
+                    int yz = (int)(Math.random()*65)+10 ;
+                    int xz = (int)(Math.random()*10)+100 ;
+                    Zombie zombie= new Zombie(xz,yz);
+                    zombies.add(i,zombie);
+                    check[i] = 1;
+                }
+            }
+
+            for (int i = 0; i < zombies.size(); i++) {
+                if (check[i] == 1) {
+                    Zombie zombie= zombies.get(i);
+                    if (zombie.getX() > 20) {
+                        zombieAnimationIndex %=17;
+                        zombie.DrawZombie(gl,zombie.getX(),zombie.getY(),zombieMove[zombieAnimationIndex],10,10);
+                        zombieAnimationIndex++;
+
+                        if (UI.getDifficulty().equals("easy")){
+                            zombie.Move(0.2);
+                        }
+                        else if(UI.getDifficulty().equals("medium")){
+                            zombie.Move(0.5);
+                        } else if (UI.getDifficulty().equals("hard")) {
+                            zombie.Move(1);
+                        }
+//                    System.out.println(zombieAnimationIndex);
+                    } else {
+                        zombies.remove(i);
+                        check[i]=0;
+                    }
+                }
+            }
+
+
+//--------------------------------------------check collisions ------------------------//
+            checkPlayerCollisions(player1);
+            checkBulletCollision(player1);
+            if (UI.isMultiPlayer()) {
+                checkPlayerCollisions(player2);
+                checkBulletCollision(player2);
+            }
         }
     }
 
@@ -298,6 +359,46 @@ public class GameGLEventListener extends AnimationListener {
         gl.glDisable(GL.GL_BLEND);
     }
     //-----------------------------------------------------draw sprite function-------------------------------------------------------
+
+    private void checkPlayerCollisions(Player player) {
+        for (int i = 0; i < zombies.size(); i++) {
+            if(check[i]==1) {
+                Zombie zombie = zombies.get(i);
+                // Check collisions with player
+                if (Math.abs(player.getX() - zombie.getX()) <= 7 && Math.abs(player.getY() - zombie.getY()) <= 7) {
+                    // Collision detected between player and zombie
+                    zombies.remove(zombie); // Remove the zombie
+                    check[i] = 0;
+                    player.decrementLives(); // Decrement player lives
+                    break; // Break out of the loop as we have removed the zombie and decremented lives
+                }
+            }
+        }
+    }
+    private  void checkBulletCollision(Player player){
+        for (int i = 0; i < zombies.size(); i++) {
+            if (check[i] == 1) {
+                Zombie zombie = zombies.get(i);
+
+                // Check collisions with player bullets
+                Iterator<Bullet> bulletIterator = player.getBullets().iterator();
+                while (bulletIterator.hasNext()) {
+                    Bullet bullet = bulletIterator.next();
+
+                    if (Math.abs(bullet.getX() - zombie.getX()) <= 4 && Math.abs(bullet.getY() - zombie.getY()) <= 4) {
+                        // Collision detected between player bullet and zombie
+                        bulletIterator.remove(); // Remove the bullet
+                        zombies.remove(i); // Remove the zombie
+                        check[i] = 0;
+                        player1.gotAKill();
+                        break; // Break out of the loop as we have removed the bullet and the zombie
+                    }
+                }
+            }
+        }
+    }
+
+    //-----------------------------------------------------check collision function-------------------------------------------------------
 
     @Override
     public void reshape(GLAutoDrawable glAutoDrawable, int i, int i1, int i2, int i3) {
