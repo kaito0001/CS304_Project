@@ -3,6 +3,7 @@ package gameplay.Players;
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.glu.GLU;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -13,6 +14,7 @@ import java.util.BitSet;
 import java.util.Iterator;
 import Texture.*;
 import UI.Menus;
+import UI.Sound;
 import gameplay.zombies.Zombie;
 import com.sun.opengl.util.j2d.TextRenderer;
 
@@ -23,6 +25,9 @@ public class GameGLEventListener extends AnimationListener {
     CLASS VARIABLES
     -----------------
      */
+    String S1 = "Player One";
+    String S2 = "Player Two";
+    Sound sound = new Sound();
     boolean paused=false;
     String pause="playing";
     boolean helpInGame=false;
@@ -75,6 +80,7 @@ public class GameGLEventListener extends AnimationListener {
             ,"Zombie//Zmove15.png","Zombie//Zmove16.png",
 
             "Buttons/Pause.png","Views/Menus/Pause.png","Views/Menus/One_Player_Score.png","Views/Menus/Two_Players_Score.png",
+            "Game//Player One Score and Lives.png" , "Game//Player Two Score and Lives.png" , "Game//Timer.png" ,
 
 
             // backGround picture
@@ -213,13 +219,15 @@ public class GameGLEventListener extends AnimationListener {
         GL gl = glAutoDrawable.getGL();
         gl.glClearColor(1.0f, 0f, 0f, 1.0f);    //This Will Clear The Background Color To Black
 
+        playMusic(0);
+
         gl.glEnable(GL.GL_TEXTURE_2D);  // Enable Texture Mapping
         gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
         gl.glGenTextures(textureNames.length, textures, 0);
 
         for (int i = 0; i < textureNames.length; i++) {
             try {
-                texture[i] = Texture.TextureReader.readTexture(assetsFolderName + "//" + textureNames[i], true);
+                texture[i] = TextureReader.readTexture(assetsFolderName + "//" + textureNames[i], true);
                 gl.glBindTexture(GL.GL_TEXTURE_2D, textures[i]);
 
 //               mipmapsFromPNG(gl, new GLU(), texture[i]);
@@ -240,6 +248,7 @@ public class GameGLEventListener extends AnimationListener {
 
     @Override
     public void display(GLAutoDrawable glAutoDrawable) {
+        TextRenderer textRenderer = null;
         GL gl = glAutoDrawable.getGL();
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);
         gl.glLoadIdentity();
@@ -249,6 +258,10 @@ public class GameGLEventListener extends AnimationListener {
                 handleKeyPress(); // handle input
             }
             DrawBackGround(gl);
+            CheekAlive(gl);
+            DisplayData(textRenderer);
+            zombieAnimationIndex++;
+            zombieAnimationIndex %=17;
             DrawSprite(gl, 95, 95, 71, 1, 1);
             
             handleTimer();
@@ -363,8 +376,70 @@ public class GameGLEventListener extends AnimationListener {
                 UI.DrawBackGround(gl, 0, 0, 73);
                 renderScore(player1,350,350);
             }
+
+        }
+        if (UI.isMultiPlayer()){
+            if (!player1.isAlive()&&!player2.isAlive()) {
+                UI.setCurrent("multiScore");
+                UI.DrawBackGround(gl, 0, 0, 74);
+                renderScore(player1,441,420);
+                renderScore(player2,441,345);
+            }
+        }else{
+            if (!player1.isAlive()) {
+                UI.setCurrent("singleScore");
+                UI.DrawBackGround(gl, 0, 0, 73);
+                renderScore(player1,350,350);
+            }
         }
     }
+
+    private void DisplayData(TextRenderer textRenderer) {
+        if (UI.getCurrent().equals("game")){
+            Render(textRenderer,46,660, String.valueOf(timer) ,20);
+        }
+        if (UI.getCurrent().equals("game") && UI.isMultiPlayer()){
+            Render(textRenderer,280,655, String.valueOf(player1.score),20);
+            Render(textRenderer,302,662, "x" + player1.getLives() ,10);
+            Render(textRenderer,420,656, String.valueOf(player2.score),20);
+            Render(textRenderer,442,662, "x" + player2.getLives() ,10);
+        }
+        if (UI.getCurrent().equals("game") && !UI.isMultiPlayer()){
+            Render(textRenderer,350,655, String.valueOf(player1.score),20);
+            Render(textRenderer,372,662, "x" + player1.getLives() ,10);
+        }
+        if(UI.getCurrent().equals("login") && UI.isMultiPlayer()){
+            Render(textRenderer, 350 , 350 , S1 , 25);
+            Render(textRenderer, 350 , 390 , S2 , 25);
+        }
+        if(UI.getCurrent().equals("login") && !UI.isMultiPlayer()){
+            Render(textRenderer, 350 , 350 , S1 , 25);
+        }
+    }
+
+    private void Render(TextRenderer textRenderer , int x , int y , String messege ,  int fontSize) {
+        textRenderer = new TextRenderer(new Font("Arial", 1, fontSize));
+        textRenderer.beginRendering(700, 700);
+        textRenderer.setColor(Color.white);
+        textRenderer.setSmoothing(true);
+        textRenderer.draw(messege, x , y);
+        textRenderer.setColor(Color.white);
+        textRenderer.endRendering();
+    }
+
+    private void CheekAlive(GL gl) {
+        if (UI.getCurrent().equals("game")){
+            DrawSprite(gl, 10 , 95 , 77 , 1 , 1);
+        }
+        if (UI.getCurrent().equals("game") && UI.isMultiPlayer()){
+            DrawSprite(gl, 40 , 95 , 75 , 1.2f , 1);
+            DrawSprite(gl, 60 , 95 , 76 , 1.2f , 1);
+        }
+        if (UI.getCurrent().equals("game") && !UI.isMultiPlayer()){
+            DrawSprite(gl, 50 , 95 , 75 , 1.2f , 1);
+        }
+    }
+
     public void resetGame(){
         player1 = new Player(21,40);
         player2 = new Player(21,60);
@@ -526,15 +601,27 @@ public class GameGLEventListener extends AnimationListener {
             case "home" -> {
                 if (xClick >= 40 && xClick <= 57 && yClick >= 45 && yClick <= 50) {
                     UI.setCurrent("player");
+                    playSE(2);
 
                 } else if (xClick >= 40 && xClick <= 57 && yClick <= 40 && yClick >= 35) {
                     UI.setCurrent("help");
+                    playSE(2);
 
                 } else if (xClick >= 40 && xClick <= 57 && yClick <= 30 && yClick >= 25) {
                     UI.setCurrent("about");
+                    playSE(2);
+
+                } else if (Math.pow(xClick-55,2) + Math.pow(yClick-55,2) <= 5) {
+                    stopMusic();
+                    playSE(2);
+
+                } else if (Math.pow(xClick-45,2) + Math.pow(yClick-55,2) <= 5) {
+                    playMusic(0);
+                    playSE(2);
 
                 } else if (xClick >= 40 && xClick <= 57 && yClick <= 20 && yClick >= 15) {
                     System.exit(0);
+                    playSE(2);
                 }
             }
 //      ------------------------------handle home page buttons-------------------------------
@@ -544,13 +631,16 @@ public class GameGLEventListener extends AnimationListener {
                 if (xClick >= 40 && xClick <= 57 && yClick >= 45 && yClick <= 50) { // game mode (singlePlayer)
                     UI.setCurrent("levels");
                     UI.setMultiPlayer(52, false);
+                    playSE(2);
 
                 } else if (xClick >= 40 && xClick <= 57 && yClick >= 37 && yClick <= 43) { // game mode (multiPlayer)
                     UI.setCurrent("levels");
                     UI.setMultiPlayer(51, true);
+                    playSE(2);
 
                 } else if (xClick >= 63 && xClick <= 69 && yClick >= 75 && yClick <= 79) { // exit button has been clicked
                     UI.setCurrent("home");
+                    playSE(2);
                 }
             }
 //      ---------------------------handle game mode page buttons-----------------------------
@@ -560,17 +650,33 @@ public class GameGLEventListener extends AnimationListener {
                 if (xClick >= 38 && xClick <= 62 && yClick >= 53 && yClick <= 59) { // the player has chosen easy
                     UI.setCurrent("login");
                     UI.setDifficulty("easy");
+                    playSE(2);
+                    S1 = JOptionPane.showInputDialog(null);
+                    if(UI.isMultiPlayer()){
+                        S2 = JOptionPane.showInputDialog(null);
+                    }
 
                 } else if (xClick >= 38 && xClick <= 62 && yClick <= 50 && yClick >= 45) { // the player has chosen medium
                     UI.setCurrent("login");
                     UI.setDifficulty("medium");
+                    playSE(2);
+                    S1 = JOptionPane.showInputDialog(null);
+                    if(UI.isMultiPlayer()){
+                        S2 = JOptionPane.showInputDialog(null);
+                    }
 
                 } else if (xClick >= 38 && xClick <= 62 && yClick <= 42 && yClick >= 38) { // the player has chosen hard
                     UI.setCurrent("login");
                     UI.setDifficulty("hard");
+                    playSE(2);
+                    S1 = JOptionPane.showInputDialog(null);
+                    if(UI.isMultiPlayer()){
+                        S2 = JOptionPane.showInputDialog(null);
+                    }
 
                 } else if (xClick >= 63 && xClick <= 69 && yClick >= 75 && yClick <= 79) { // exit button has been clicked
                     UI.setCurrent("player");
+                    playSE(2);
                 }
             }
 //      ---------------------------handle difficulty page buttons----------------------------
@@ -579,6 +685,7 @@ public class GameGLEventListener extends AnimationListener {
             case "help" -> {
                 if (xClick >= 69 && xClick <= 72 && yClick >= 77 && yClick <= 81) { // exit button has been clicked
                     UI.setCurrent("home");
+                    playSE(2);
                 }
             }
 //      ------------------------------handle help page buttons----------------------------
@@ -589,17 +696,21 @@ public class GameGLEventListener extends AnimationListener {
                 if (xClick >= 53 && xClick <= 57 && yClick >= 31 && yClick <= 36) { // exit button has been clicked
                     UI.setCurrent("home");
                     resetGame();
+                    playSE(2);
                 }else if (xClick >= 41 && xClick <= 47 && yClick >= 31 && yClick <= 36) { // exit button has been clicked
                     UI.setCurrent("game");
                     resetGame();
+                    playSE(2);
                 }
             } case "singleScore" -> {
                 if (xClick >= 53 && xClick <= 57 && yClick >= 31 && yClick <= 36) { // exit button has been clicked
                     UI.setCurrent("home");
                     resetGame();
+                    playSE(2);
                 }else if (xClick >= 41 && xClick <= 47 && yClick >= 31 && yClick <= 36) { // exit button has been clicked
                     UI.setCurrent("game");
                     resetGame();
+                    playSE(2);
                 }
             }
 //      ------------------------------handle score page buttons----------------------------
@@ -608,6 +719,7 @@ public class GameGLEventListener extends AnimationListener {
             case "about" -> {
                 if (xClick >= 64 && xClick <= 68 && yClick >= 76 && yClick <= 81) { // exit button has been clicked
                     UI.setCurrent("home");
+                    playSE(2);
                 }
             }
 //      ------------------------------handle credits page buttons----------------------------
@@ -616,17 +728,21 @@ public class GameGLEventListener extends AnimationListener {
             case "login" -> {
                 if (xClick >= 67 && xClick <= 71 && yClick >= 75 && yClick <= 81) { // exit button has been clicked
                     UI.setCurrent("levels");
+                    playSE(2);
 
                 } else if (xClick >= 44 && xClick <= 53 && yClick >= 30 && yClick <= 36) { // start game has been pressed
                     UI.setCurrent("game");
+                    playSE(2);
+                    stopMusic();
+                    playMusic(1);
                 }
             }
             case "game" -> {
                 if (xClick >= 91 && xClick <= 98 && yClick >= 91 && yClick <= 100) { // pause button has been clicked
                     paused=true;
                     pause="pause";
-
-
+                    playSE(2);
+                    stopMusic();
                 }
             }
 
@@ -639,26 +755,31 @@ public class GameGLEventListener extends AnimationListener {
                 UI.setCurrent("game");
                 paused = false;
                 pause="playing";
+                playSE(2);
 
             }else if (xClick >= 38 && xClick <= 62 && yClick >= 56 && yClick <= 62){// resume button
                 paused=false;
+                playSE(2);
             }else if (xClick >= 38 && xClick <= 62 && yClick >= 48 && yClick <= 54){// help in game button
                 helpInGame=true;
+                playSE(2);
             }else if (xClick >= 38 && xClick <= 62 && yClick >= 40 && yClick <= 45){// back to home menu button
                 UI.setCurrent("home");
                 pause="playing";
                 paused=false;
+                playSE(2);
+                playMusic(1);
                 resetGame();
             }else if (xClick >= 51 && xClick <= 58 && yClick >= 32 && yClick <= 37){// mute button
-
+                stopMusic();
             }else if (xClick >= 41 && xClick <= 48 && yClick >= 31 && yClick <= 37){//music button
-
+                stopMusic();
             }
         }
         if (helpInGame){
             if (xClick >= 69 && xClick <= 72 && yClick >= 76 && yClick <= 80) { // exit button has been clicked
                 helpInGame=false;
-
+                playSE(2);
             }
         }
 //      ------------------------------handel pause button----------------------------------------------------------------------
@@ -680,6 +801,21 @@ public class GameGLEventListener extends AnimationListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    public void playMusic (int i) {
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+
+    public void stopMusic () {
+        sound.stop();
+    }
+
+    public void playSE (int i) {
+        sound.setFile(i);
+        sound.play();
     }
 }
 

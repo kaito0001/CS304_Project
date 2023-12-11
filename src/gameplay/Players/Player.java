@@ -98,6 +98,10 @@ public class Player {
         return bullets;
     }
 
+    int getLives(){
+        return lives;
+    }
+
     // a method to decrement lives of player
     void decrementLives() {
         if (isAlive()) { // first checks if the player is still alive
