@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e5195603-3530-48d5-a70a-f76b21a806c8" name="Changes" comment="merged menus with players">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Views/Menus/Pause.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Views/Menus/Pause.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameplay/Players/GameGLEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/Players/GameGLEventListener.java" afterDir="false" />
-    </list>
+    <list default="true" id="e5195603-3530-48d5-a70a-f76b21a806c8" name="Changes" comment="add pause menu" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -80,7 +75,7 @@
       <option name="presentableId" value="Default" />
       <updated>1701695482115</updated>
       <workItem from="1702247688411" duration="2060000" />
-      <workItem from="1702299626702" duration="10458000" />
+      <workItem from="1702299626702" duration="10823000" />
     </task>
     <task id="LOCAL-00001" summary="Adding assets for players and zombies (Sherif Omar)">
       <created>1702217415739</created>
@@ -96,7 +91,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702297806402</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="add pause menu">
+      <option name="closed" value="true" />
+      <created>1702310421702</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1702310421702</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -113,7 +116,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="making_player" />
+                        <option value="origin/master" />
                       </list>
                     </value>
                   </entry>
@@ -130,6 +133,7 @@
     <MESSAGE value="Adding assets for players and zombies (Sherif Omar)" />
     <MESSAGE value="1- moved drawing function to the Player class&#10;2- added pictures of players and bullets&#10;3- handled fire spreading" />
     <MESSAGE value="merged menus with players" />
-    <option name="LAST_COMMIT_MESSAGE" value="merged menus with players" />
+    <MESSAGE value="add pause menu" />
+    <option name="LAST_COMMIT_MESSAGE" value="add pause menu" />
   </component>
 </project>
