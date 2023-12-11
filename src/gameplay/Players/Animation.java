@@ -32,6 +32,7 @@ public class Animation extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
         setFocusable(true);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         glcanvas.requestFocus();
     }
 }

@@ -3,6 +3,9 @@ package gameplay.Players;
 import javax.media.opengl.GL;
 import java.util.ArrayList;
 
+import static gameplay.Players.GameGLEventListener.MAX_HEIGHT;
+import static gameplay.Players.GameGLEventListener.MAX_WIDTH;
+
 public class Player {
     /*
     -----------------
@@ -18,8 +21,6 @@ public class Player {
     private boolean alive = true; // starting with player being alive
 
     int score = 0;
-
-    private final int MAX_WIDTH = 100, MAX_HEIGHT = 100; // set max height and width to translate sprites using integers
 
     private ArrayList<Bullet> bullets = new ArrayList<>();
 //  ------------------------------------------------------------------

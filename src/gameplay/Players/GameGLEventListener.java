@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.BitSet;
 import java.util.Iterator;
 import Texture.*;
+import UI.Menus;
 
 public class GameGLEventListener extends AnimationListener {
     /*
@@ -17,25 +18,21 @@ public class GameGLEventListener extends AnimationListener {
     CLASS VARIABLES
     -----------------
      */
-    int loginIndex=51;
-    String current ="home";
-    boolean mute=false;
-    boolean easy=true;
-    boolean medium=false;
-    boolean hard=false;
 
-    boolean multiPlayer = true; // declare the user choice if the game is single or multiplayer
+    Menus UI = new Menus();
 
-    private final int MAX_WIDTH = 100, MAX_HEIGHT = 100; // set max height and width to translate sprites using integers
+    public static final int MAX_WIDTH = 100, MAX_HEIGHT = 100; // set max height and width to translate sprites using integers
 
     private final BitSet keyBits = new BitSet(256); // a bitset used to handle multi keys pressed at the same time
 
-    Player player1 = new Player(10,40); // initiating player1 at position (10,40)
-    Player player2 = new Player(10,60); // initiating player2 at position (10,60)
+    Player player1 = new Player(21,40); // initiating player1 at position (21,40)
+    Player player2 = new Player(21,60); // initiating player2 at position (21,60)
+
+    boolean playing = false;
 
 //    ArrayList<Bullet> bullets = new ArrayList<>(); // initiate an empty arraylist to track bullets
 
-    static String[] textureNames = {  // array containing paths of the pictures used
+    public static String[] textureNames = {  // array containing paths of the pictures used
             // player1 pictures
             "Player1//P1move0.png", "Player1//P1move1.png", "Player1//P1move2.png", "Player1//P1move3.png", "Player1//P1move4.png",
             "Player1//P1move5.png", "Player1//P1move6.png", "Player1//P1move7.png", "Player1//P1move8.png", "Player1//P1move9.png",
@@ -50,8 +47,13 @@ public class GameGLEventListener extends AnimationListener {
 
             // bullet picture
             "Bullet.png",
+
+            // menus pictures
             "Views/Home.png","Buttons/Play.png","Buttons/Help.png","Buttons/About US.png","Buttons/Exit.png","Buttons/Music.png","Buttons/Mute.png"
-            ,"Views/Menus/MultiPlayer.png","Views/Menus/Help.png","Views/Menus/Levels.png","Views/Menus/Login of One Player.png","Views/Menus/Login of Two Players.png","Views/Menus/About_US.png"
+            ,"Views/Menus/MultiPlayer.png","Views/Menus/Help.png","Views/Menus/Levels.png","Views/Menus/Login of One Player.png","Views/Menus/Login of Two Players.png","Views/Menus/About_US.png",
+
+            // backGround picture
+            "Night.png"
     };
 
     // pictures indexes
@@ -63,7 +65,7 @@ public class GameGLEventListener extends AnimationListener {
 
     // preparing the pictures to be rendered and used
     TextureReader.Texture[] texture = new TextureReader.Texture[textureNames.length];
-    static int[] textures = new int[textureNames.length];
+    public static int[] textures = new int[textureNames.length];
 
 //  **********************************************************************************************
 
@@ -90,17 +92,17 @@ public class GameGLEventListener extends AnimationListener {
             player1AnimationIndex %= 20;
 
             if (isKeyPressed(KeyEvent.VK_UP)) {
-                if (player1.getY() < MAX_HEIGHT - 3) {
+                if (player1.getY() < MAX_HEIGHT - 27) {
                     player1.moveUp(1);
                 }
             }
             if (isKeyPressed(KeyEvent.VK_DOWN)) {
-                if (player1.getY() > 4) {
+                if (player1.getY() > 9) {
                     player1.moveDown(1);
                 }
             }
             if (isKeyPressed(KeyEvent.VK_LEFT)) {
-                if (player1.getX() > 4) {
+                if (player1.getX() > 21) {
                     player1.moveLeft(1);
                 }
             }
@@ -121,7 +123,7 @@ public class GameGLEventListener extends AnimationListener {
         /*
         HANDLE PLAYER2 MOVEMENT AND ATTACK
          */
-        if(multiPlayer) {
+        if(UI.isMultiPlayer()) {
             if(player2.isAlive()) {
                 // check if any of player2 movement keys is pressed
                 if (isKeyPressed(KeyEvent.VK_W) || isKeyPressed(KeyEvent.VK_S) || isKeyPressed(KeyEvent.VK_A) || isKeyPressed(KeyEvent.VK_D)) {
@@ -131,17 +133,17 @@ public class GameGLEventListener extends AnimationListener {
                     player2AnimationIndex %= 20;
 
                     if (isKeyPressed(KeyEvent.VK_W)) {
-                        if (player2.getY() < MAX_HEIGHT - 3) {
+                        if (player2.getY() < MAX_HEIGHT - 27) {
                             player2.moveUp(1);
                         }
                     }
                     if (isKeyPressed(KeyEvent.VK_S)) {
-                        if (player2.getY() > 4) {
+                        if (player2.getY() > 9) {
                             player2.moveDown(1);
                         }
                     }
                     if (isKeyPressed(KeyEvent.VK_A)) {
-                        if (player2.getX() > 4) {
+                        if (player2.getX() > 21) {
                             player2.moveLeft(1);
                         }
                     }
@@ -203,57 +205,59 @@ public class GameGLEventListener extends AnimationListener {
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);
         gl.glLoadIdentity();
 
-        handleKeyPress(); // handle input
+            UI.currentPage(gl);
 
+        if(UI.getCurrent().equals("game")) {
+            handleKeyPress(); // handle input
+            DrawBackGround(gl);
 //      ----------------------------------------------------draw player1 bullets------------------------------------------------------
-        Iterator<Bullet> iterator1 = player1.getBullets().iterator(); // making iterator of bullets to use its remove method to avoid "ConcurrentModificationException"
-        while (iterator1.hasNext()) { // check if there are still elements
-            Bullet bullet = iterator1.next(); // get next element as bullet
+            Iterator<Bullet> iterator1 = player1.getBullets().iterator(); // making iterator of bullets to use its remove method to avoid "ConcurrentModificationException"
+            while (iterator1.hasNext()) { // check if there are still elements
+                Bullet bullet = iterator1.next(); // get next element as bullet
 
-            if (bullet.getX() < MAX_WIDTH) { // if bullet is still in the screen draw it then increment its x for next frame
-                bullet.drawBullet(gl, bullet.getX(), bullet.getY(), 40, 3, 3);
-                bullet.move(1);
+                if (bullet.getX() < MAX_WIDTH) { // if bullet is still in the screen draw it then increment its x for next frame
+                    bullet.drawBullet(gl, bullet.getX(), bullet.getY(), 40, 3, 3);
+                    bullet.move(1);
 
-            } else { // if not then remove the bullet to lower sources usage (performance)
-                iterator1.remove();
+                } else { // if not then remove the bullet to lower sources usage (performance)
+                    iterator1.remove();
+                }
+
             }
-        }
 //      ----------------------------------------------------draw player1 bullets------------------------------------------------------
 
 //      ----------------------------------------------------draw player2 bullets------------------------------------------------------
-        Iterator<Bullet> iterator2 = player2.getBullets().iterator(); // making iterator of bullets to use its remove method to avoid "ConcurrentModificationException"
-        while (iterator2.hasNext()) { // check if there are still elements
-            Bullet bullet = iterator2.next(); // get next element as bullet
+            Iterator<Bullet> iterator2 = player2.getBullets().iterator(); // making iterator of bullets to use its remove method to avoid "ConcurrentModificationException"
+            while (iterator2.hasNext()) { // check if there are still elements
+                Bullet bullet = iterator2.next(); // get next element as bullet
 
-            if (bullet.getX() < MAX_WIDTH) { // if bullet is still in the screen draw it then increment its x for next frame
-                bullet.drawBullet(gl, bullet.getX(), bullet.getY(), 40, 3, 3);
-                bullet.move(1);
+                if (bullet.getX() < MAX_WIDTH) { // if bullet is still in the screen draw it then increment its x for next frame
+                    bullet.drawBullet(gl, bullet.getX(), bullet.getY(), 40, 3, 3);
+                    bullet.move(1);
 
-            } else { // if not then remove the bullet to lower sources usage (performance)
-                iterator2.remove();
+                } else { // if not then remove the bullet to lower sources usage (performance)
+                    iterator2.remove();
+                }
             }
-        }
 //      ----------------------------------------------------draw player2 bullets------------------------------------------------------
 
 //      ----------------------------------------------------draw players------------------------------------------------------
-        if(player1.isAlive()) { // checks if player2 is alive before drawing
-            player1.drawPlayer(gl, player1.getX(), player1.getY(), player1Move[player1AnimationIndex], 10, 10); // draw player1 at the specified x and y each frame
-        }
-        if(multiPlayer) { // check first if it's multiplayer
-            if (player2.isAlive()) { // checks if player2 is alive before drawing
-                player2.drawPlayer(gl, player2.getX(), player2.getY(), player2Move[player2AnimationIndex], 10, 10); // draw player2 at the specified x and y each frame
+            if(player1.isAlive()) { // checks if player2 is alive before drawing
+                player1.drawPlayer(gl, player1.getX(), player1.getY(), player1Move[player1AnimationIndex], 10, 10); // draw player1 at the specified x and y each frame
             }
-        }
-
+            if(UI.isMultiPlayer()) { // check first if it's multiplayer
+                if (player2.isAlive()) { // checks if player2 is alive before drawing
+                    player2.drawPlayer(gl, player2.getX(), player2.getY(), player2Move[player2AnimationIndex], 10, 10); // draw player2 at the specified x and y each frame
+                }
+            }
 //      ----------------------------------------------------draw players------------------------------------------------------
-
+        }
     }
-    public void DrawBackGound(GL gl,int x, int y, int index){
+
+    public void DrawBackGround(GL gl) {
         gl.glEnable(GL.GL_BLEND);
-        gl.glBindTexture(GL.GL_TEXTURE_2D, textures[index]);
+        gl.glBindTexture(GL.GL_TEXTURE_2D, textures[textures.length - 1]);
         gl.glPushMatrix();
-//        gl.glTranslated( x/(MAX_WIDTH/2.0) - 1, y/(MAX_HEIGHT/2.0) - 1, 0);
-//        System.out.println(x +" " + y);
         gl.glBegin(GL.GL_QUADS);
         // Front Face
         gl.glTexCoord2f(0.0f, 0.0f);
@@ -295,45 +299,6 @@ public class GameGLEventListener extends AnimationListener {
     }
     //-----------------------------------------------------draw sprite function-------------------------------------------------------
 
-
-    public void currentPage(GL gl){
-        if (current.equals("home")) {
-            DrawBackGound(gl, 0, 0, 41);
-            DrawSprite(gl, 50, 47, 42, 2, 1);
-            DrawSprite(gl, 50, 37, 43, 2, 1);
-            DrawSprite(gl, 50, 27, 44, 2, 1);
-            DrawSprite(gl, 50, 17, 45, 2, 1);
-            DrawSprite(gl, 45, 55, 46, 1, 1);
-            DrawSprite(gl, 55, 55, 47, 1, 1);
-        }
-        if (current.equals("player")){
-            DrawBackGound(gl, 0, 0, 41);
-            DrawSprite(gl, 50, 47, 48, 6, 7);
-        }
-        if (current.equals("help")) {
-            DrawBackGound(gl, 0, 0, 41);
-            DrawSprite(gl, 50, 50, 49, 6, 7);
-
-        }
-        if (current.equals("about")) {
-            DrawBackGound(gl, 0, 0, 41);
-            DrawSprite(gl, 50, 50, 53, 6, 7);
-
-        }
-
-        if (current.equals("levels")){
-            DrawBackGound(gl, 0, 0, 41);
-            DrawSprite(gl, 50, 47, 50, 6, 7);
-        }
-        if (current.equals("login")) {
-            DrawBackGound(gl, 0, 0, 41);
-            DrawSprite(gl, 50, 50, loginIndex, 6, 7);
-
-        }
-    }
-    //-----------------------------------------------------check the current page and draw it -------------------------------------------------------
-
-
     @Override
     public void reshape(GLAutoDrawable glAutoDrawable, int i, int i1, int i2, int i3) {
 
@@ -372,68 +337,106 @@ public class GameGLEventListener extends AnimationListener {
 
     }
 
-//----------------------------------------------------------------------------------------------------------------------------------
+//  ---------------------------------------------buttons check -----------------------------------------------------------------
     @Override
     public void mousePressed(MouseEvent e) {
         double x = e.getX();
         double y = e.getY();
+
         Component c = e.getComponent();
         double width = c.getWidth();
         double height = c.getHeight();
-        int Xclick = (int) ((x / width) * 100) ;
-        int Yclick =  (int) (100 * y / height);
-        Yclick=100-Yclick;
-        System.out.println(Xclick+","+Yclick);
-        if(current.equals("home")) {
-            if (Xclick >= 40 && Xclick <= 57 && Yclick >= 45 && Yclick <= 50) {
-                current = "player";
-            }
-            else if (Xclick >= 40 && Xclick <= 57 && Yclick <= 40 && Yclick >= 35) {
-                current = "help";
-            }else if (Xclick >= 40 && Xclick <= 57 && Yclick <= 30 && Yclick >= 25) {
-                current ="about";
-            } else if (Xclick >= 40 && Xclick <= 57 && Yclick <= 20 && Yclick >= 15) {
-                System.exit(0);
-            }
-        } else if (current.equals("player")) {
-            if (Xclick >= 40 && Xclick <= 57 && Yclick >= 45 && Yclick <= 50) {
-                current = "levels";
-            }
-            else if (Xclick >= 40 && Xclick <= 57 && Yclick >= 37&&Yclick <= 43 ) {
-                current = "levels";
-                multiPlayer=true;
-            }else if (Xclick >= 63 && Xclick <= 69 && Yclick >= 75&&Yclick <= 79 ) {
-                current = "home";
-                multiPlayer=true;
-                loginIndex=11;
-            }
-        }else if (current.equals("levels")) {
-            if (Xclick >= 38 && Xclick <= 62 && Yclick >= 53 && Yclick <= 59) {
-                current = "login";
-                easy=true;
-            }
-            else if (Xclick >= 38 && Xclick <= 62 && Yclick <= 50 && Yclick >= 45) {
-                current = "login";
-                medium=true;
-            } else if (Xclick >= 38 && Xclick <= 62 && Yclick <= 42 && Yclick >= 38) {
-                current = "login";
-                hard=true;
-            }else if (Xclick >= 63 && Xclick <= 69 && Yclick >= 75&&Yclick <= 79 ) {
-                current = "player";
-                multiPlayer=true;
-                loginIndex=52;
-            }
-        }else if (current.equals("help")) {
-            if (Xclick >= 69 && Xclick <= 72 && Yclick >= 77&&Yclick <= 81 ) {
-                current = "home";
 
+        // get click position
+        int xClick = (int)((x / width) * 100);
+        int yClick = 100 - (int)(100 * y / height);
+//        System.out.println(xClick);
+//        System.out.println(yClick);
 
+//      ------------------------------handle home page buttons-------------------------------
+        switch (UI.getCurrent()) {
+            case "home" -> {
+                if (xClick >= 40 && xClick <= 57 && yClick >= 45 && yClick <= 50) {
+                    UI.setCurrent("player");
+
+                } else if (xClick >= 40 && xClick <= 57 && yClick <= 40 && yClick >= 35) {
+                    UI.setCurrent("help");
+
+                } else if (xClick >= 40 && xClick <= 57 && yClick <= 30 && yClick >= 25) {
+                    UI.setCurrent("about");
+
+                } else if (xClick >= 40 && xClick <= 57 && yClick <= 20 && yClick >= 15) {
+                    System.exit(0);
+                }
             }
+//      ------------------------------handle home page buttons-------------------------------
 
+//      ---------------------------handle game mode page buttons-----------------------------
+            case "player" -> {
+                if (xClick >= 40 && xClick <= 57 && yClick >= 45 && yClick <= 50) { // game mode (singlePlayer)
+                    UI.setCurrent("levels");
+                    UI.setMultiPlayer(52, false);
+
+                } else if (xClick >= 40 && xClick <= 57 && yClick >= 37 && yClick <= 43) { // game mode (multiPlayer)
+                    UI.setCurrent("levels");
+                    UI.setMultiPlayer(51, true);
+
+                } else if (xClick >= 63 && xClick <= 69 && yClick >= 75 && yClick <= 79) { // exit button has been clicked
+                    UI.setCurrent("home");
+                }
+            }
+//      ---------------------------handle game mode page buttons-----------------------------
+
+//      ---------------------------handle difficulty page buttons----------------------------
+            case "levels" -> {
+                if (xClick >= 38 && xClick <= 62 && yClick >= 53 && yClick <= 59) { // the player has chosen easy
+                    UI.setCurrent("login");
+                    UI.setDifficulty("easy");
+
+                } else if (xClick >= 38 && xClick <= 62 && yClick <= 50 && yClick >= 45) { // the player has chosen medium
+                    UI.setCurrent("login");
+                    UI.setDifficulty("medium");
+
+                } else if (xClick >= 38 && xClick <= 62 && yClick <= 42 && yClick >= 38) { // the player has chosen hard
+                    UI.setCurrent("login");
+                    UI.setDifficulty("hard");
+
+                } else if (xClick >= 63 && xClick <= 69 && yClick >= 75 && yClick <= 79) { // exit button has been clicked
+                    UI.setCurrent("player");
+                }
+            }
+//      ---------------------------handle difficulty page buttons----------------------------
+
+//      ------------------------------handle help page buttons----------------------------
+            case "help" -> {
+                if (xClick >= 69 && xClick <= 72 && yClick >= 77 && yClick <= 81) { // exit button has been clicked
+                    UI.setCurrent("home");
+                }
+            }
+//      ------------------------------handle help page buttons----------------------------
+
+//      ------------------------------handle credits page buttons----------------------------
+            case "about" -> {
+                if (xClick >= 64 && xClick <= 68 && yClick >= 76 && yClick <= 81) { // exit button has been clicked
+                    UI.setCurrent("home");
+                }
+            }
+//      ------------------------------handle credits page buttons----------------------------
+
+//      ------------------------------handle login credits buttons----------------------------
+            case "login" -> {
+                if (xClick >= 67 && xClick <= 71 && yClick >= 75 && yClick <= 81) { // exit button has been clicked
+                    UI.setCurrent("home");
+
+                } else if (xClick >= 44 && xClick <= 53 && yClick >= 30 && yClick <= 36) { // start game has been pressed
+                    UI.setCurrent("game");
+                }
+            }
         }
+//      ------------------------------handle login credits buttons----------------------------
     }
 
-        //-----------------------------------------------------------------buttons check -----------------------------------------------------------------
+//  ---------------------------------------------buttons check -----------------------------------------------------------------
 
 
     @Override

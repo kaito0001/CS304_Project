@@ -5,14 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5195603-3530-48d5-a70a-f76b21a806c8" name="Changes" comment="1- moved drawing function to the Player class&#10;2- added pictures of players and bullets&#10;3- handled fire spreading">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_6_2023_8_57_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_6_2023_8_57_PM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_6_2023_9_03_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_6_2023_9_03_PM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_7_2023_1_00_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_7_2023_1_00_AM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gameplay/Players/Animation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/Players/Animation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameplay/Players/AnimationListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/Players/AnimationListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameplay/Players/Bullet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/Players/Bullet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gameplay/Players/GameGLEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/Players/GameGLEventListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameplay/Players/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/Players/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,9 +41,9 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2Z4y6nnYdqRXAhVAF3G4bJHozCb" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -57,7 +57,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "git304",
-    "last_opened_file_path": "C:/Users/kaito/IdeaProjects/GunsGame/src/gameplay",
+    "last_opened_file_path": "D:/GunsGame/CS304_Project/src/Assets",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -70,6 +70,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\GunsGame\CS304_Project\src\Assets" />
       <recent name="C:\Users\kaito\IdeaProjects\GunsGame\src\gameplay" />
       <recent name="C:\Users\kaito\IdeaProjects\GunsGame\src\UI" />
     </key>

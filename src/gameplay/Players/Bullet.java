@@ -2,6 +2,9 @@ package gameplay.Players;
 
 import javax.media.opengl.GL;
 
+import static gameplay.Players.GameGLEventListener.MAX_HEIGHT;
+import static gameplay.Players.GameGLEventListener.MAX_WIDTH;
+
 public class Bullet {
     /*
     -----------------
@@ -11,7 +14,6 @@ public class Bullet {
     private double x; // x position of the bullet
     private final double y; // y position of the bullet (THE BULLET MOVES ONLY HORIZONTALLY)
 
-    private final int MAX_WIDTH = 100, MAX_HEIGHT = 100; // set max height and width to translate sprites using integers
 //  -----------------
 
     /*
