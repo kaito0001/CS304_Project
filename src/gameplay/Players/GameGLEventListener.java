@@ -354,14 +354,14 @@ public class GameGLEventListener extends AnimationListener {
             if (!player1.isAlive()&&!player2.isAlive()) {
                 UI.setCurrent("multiScore");
                 UI.DrawBackGround(gl, 0, 0, 74);
-                renderScore(player1,63,59);
-                renderScore(player2,63,48);
+                renderScore(player1,441,420);
+                renderScore(player2,441,345);
             }
         }else{
             if (!player1.isAlive()) {
                 UI.setCurrent("singleScore");
                 UI.DrawBackGround(gl, 0, 0, 73);
-                renderScore(player1,50,45);
+                renderScore(player1,350,350);
             }
         }
     }
@@ -373,8 +373,8 @@ public class GameGLEventListener extends AnimationListener {
     }
     public void renderScore(Player player,int x,int y){
         TextRenderer textRenderer;
-        textRenderer = new TextRenderer(new Font("Arial", 1, 7));
-        textRenderer.beginRendering(100, 100);
+        textRenderer = new TextRenderer(new Font("Arial", 1, 20));
+        textRenderer.beginRendering(700, 700);
         textRenderer.setColor(Color.WHITE);
         textRenderer.setSmoothing(true);
         textRenderer.draw("" + player.getScore(), x, y);
