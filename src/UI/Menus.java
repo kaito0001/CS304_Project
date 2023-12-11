@@ -75,7 +75,7 @@ public class Menus {
     }
 //  -----------------------------------------------------check the current page and draw it -----------------------------------------
 
-//  -----------------------------------------------------draw backGround function----------------------------------------------------
+    //  -----------------------------------------------------draw backGround function----------------------------------------------------
     public void DrawBackGround(GL gl,int x, int y, int index){
         gl.glEnable(GL.GL_BLEND);
         gl.glBindTexture(GL.GL_TEXTURE_2D, textures[index]);
@@ -99,7 +99,7 @@ public class Menus {
     }
 //  -----------------------------------------------------draw backGround function----------------------------------------------------
 
-//  -----------------------------------------------------draw sprite function-------------------------------------------------------
+    //  -----------------------------------------------------draw sprite function-------------------------------------------------------
     public void DrawSprite(GL gl,int x, int y, int index, float scaleX,float scaleY){
         gl.glEnable(GL.GL_BLEND);
         gl.glBindTexture(GL.GL_TEXTURE_2D, textures[index]);

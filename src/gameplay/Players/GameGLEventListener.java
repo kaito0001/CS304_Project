@@ -20,7 +20,9 @@ public class GameGLEventListener extends AnimationListener {
     CLASS VARIABLES
     -----------------
      */
-
+    boolean paused=false;
+    String pause="playing";
+    boolean helpInGame=false;
     Menus UI = new Menus();
 
     public static final int MAX_WIDTH = 100, MAX_HEIGHT = 100; // set max height and width to translate sprites using integers
@@ -64,6 +66,9 @@ public class GameGLEventListener extends AnimationListener {
             ,"Zombie//Zmove5.png","Zombie//Zmove6.png","Zombie//Zmove7.png","Zombie//Zmove8.png","Zombie//Zmove9.png"
             ,"Zombie//Zmove10.png","Zombie//Zmove11.png","Zombie//Zmove12.png","Zombie//Zmove13.png","Zombie//Zmove14.png"
             ,"Zombie//Zmove15.png","Zombie//Zmove16.png",
+
+            "Buttons/Pause.png","Views/Menus/Pause.png",
+
 
             // backGround picture
             "Night.png"
@@ -226,8 +231,12 @@ public class GameGLEventListener extends AnimationListener {
             UI.currentPage(gl);
 
         if(UI.getCurrent().equals("game")) {
-            handleKeyPress(); // handle input
+            if(!paused){
+                handleKeyPress(); // handle input
+            }
             DrawBackGround(gl);
+            DrawSprite(gl, 95, 95, 71, 1, 1);
+
 //      ----------------------------------------------------draw player1 bullets------------------------------------------------------
             Iterator<Bullet> iterator1 = player1.getBullets().iterator(); // making iterator of bullets to use its remove method to avoid "ConcurrentModificationException"
             while (iterator1.hasNext()) { // check if there are still elements
@@ -235,7 +244,9 @@ public class GameGLEventListener extends AnimationListener {
 
                 if (bullet.getX() < MAX_WIDTH) { // if bullet is still in the screen draw it then increment its x for next frame
                     bullet.drawBullet(gl, bullet.getX(), bullet.getY(), 40, 3, 3);
-                    bullet.move(1);
+                   if (!paused){
+                       bullet.move(1);
+                   }
 
                 } else { // if not then remove the bullet to lower sources usage (performance)
                     iterator1.remove();
@@ -251,7 +262,9 @@ public class GameGLEventListener extends AnimationListener {
 
                 if (bullet.getX() < MAX_WIDTH) { // if bullet is still in the screen draw it then increment its x for next frame
                     bullet.drawBullet(gl, bullet.getX(), bullet.getY(), 40, 3, 3);
-                    bullet.move(1);
+                    if (!paused){
+                        bullet.move(1);
+                    }
 
                 } else { // if not then remove the bullet to lower sources usage (performance)
                     iterator2.remove();
@@ -286,15 +299,15 @@ public class GameGLEventListener extends AnimationListener {
                     if (zombie.getX() > 20) {
                         zombieAnimationIndex %=17;
                         zombie.DrawZombie(gl,zombie.getX(),zombie.getY(),zombieMove[zombieAnimationIndex],10,10);
-                        zombieAnimationIndex++;
-
-                        if (UI.getDifficulty().equals("easy")){
-                            zombie.Move(0.2);
-                        }
-                        else if(UI.getDifficulty().equals("medium")){
-                            zombie.Move(0.5);
-                        } else if (UI.getDifficulty().equals("hard")) {
-                            zombie.Move(1);
+                        if (!paused) {
+                            zombieAnimationIndex++;
+                            if (UI.getDifficulty().equals("easy")) {
+                                zombie.Move(0.2);
+                            } else if (UI.getDifficulty().equals("medium")) {
+                                zombie.Move(0.5);
+                            } else if (UI.getDifficulty().equals("hard")) {
+                                zombie.Move(1);
+                            }
                         }
 //                    System.out.println(zombieAnimationIndex);
                     } else {
@@ -312,7 +325,18 @@ public class GameGLEventListener extends AnimationListener {
                 checkPlayerCollisions(player2);
                 checkBulletCollision(player2);
             }
+            if (paused&&!helpInGame) {
+                DrawSprite(gl, 50, 50, 72, 6, 7);
+            }
+            if (helpInGame) {
+                DrawSprite(gl, 50, 50, 49, 6, 7);
+
+            }
         }
+    }
+    public void resetGame(){
+        player1.getBullets().clear();
+        player2.getBullets().clear();
     }
 
     public void DrawBackGround(GL gl) {
@@ -390,7 +414,7 @@ public class GameGLEventListener extends AnimationListener {
                         bulletIterator.remove(); // Remove the bullet
                         zombies.remove(i); // Remove the zombie
                         check[i] = 0;
-                        player1.gotAKill();
+                        player.gotAKill();
                         break; // Break out of the loop as we have removed the bullet and the zombie
                     }
                 }
@@ -451,8 +475,8 @@ public class GameGLEventListener extends AnimationListener {
         // get click position
         int xClick = (int)((x / width) * 100);
         int yClick = 100 - (int)(100 * y / height);
-//        System.out.println(xClick);
-//        System.out.println(yClick);
+        System.out.println(xClick+","+yClick);
+
 
 //      ------------------------------handle home page buttons-------------------------------
         switch (UI.getCurrent()) {
@@ -533,8 +557,47 @@ public class GameGLEventListener extends AnimationListener {
                     UI.setCurrent("game");
                 }
             }
+            case "game" -> {
+                if (xClick >= 91 && xClick <= 98 && yClick >= 91 && yClick <= 100) { // pause button has been clicked
+                    paused=true;
+                    pause="pause";
+
+
+                }
+            }
+
+
+
         }
-//      ------------------------------handle login credits buttons----------------------------
+//      --------------------------------------- handel pause button ----------------------------------------------------
+        if (pause.equals("pause")&&!helpInGame) {
+            if (xClick >= 63 && xClick <= 69 && yClick >= 78 && yClick <= 83) { // exit button has been clicked
+                UI.setCurrent("game");
+                paused = false;
+                pause="playing";
+
+            }else if (xClick >= 38 && xClick <= 62 && yClick >= 56 && yClick <= 62){// resume button
+                paused=false;
+            }else if (xClick >= 38 && xClick <= 62 && yClick >= 48 && yClick <= 54){// help in game button
+                helpInGame=true;
+            }else if (xClick >= 38 && xClick <= 62 && yClick >= 40 && yClick <= 45){// back to home menu button
+                UI.setCurrent("home");
+                pause="playing";
+                paused=false;
+                resetGame();
+            }else if (xClick >= 51 && xClick <= 58 && yClick >= 32 && yClick <= 37){// mute button
+
+            }else if (xClick >= 41 && xClick <= 48 && yClick >= 31 && yClick <= 37){//music button
+
+            }
+        }
+        if (helpInGame){
+            if (xClick >= 69 && xClick <= 72 && yClick >= 76 && yClick <= 80) { // exit button has been clicked
+                helpInGame=false;
+
+            }
+        }
+//      ------------------------------handel pause button----------------------------------------------------------------------
     }
 
 //  ---------------------------------------------buttons check -----------------------------------------------------------------

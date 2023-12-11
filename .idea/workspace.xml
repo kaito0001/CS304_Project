@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e5195603-3530-48d5-a70a-f76b21a806c8" name="Changes" comment="merged menus with players" />
+    <list default="true" id="e5195603-3530-48d5-a70a-f76b21a806c8" name="Changes" comment="merged menus with players">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_6_2023_8_57_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_6_2023_8_57_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_6_2023_9_03_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_6_2023_9_03_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_7_2023_1_00_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_7_2023_1_00_AM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Assets/Views/Menus/Pause.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Views/Menus/Pause.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/Menus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/Menus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameplay/Players/GameGLEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/Players/GameGLEventListener.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,8 +56,8 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "git304",
-    "last_opened_file_path": "D:/GunsGame/CS304_Project/src/Assets",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/Material/CS304_Project",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -75,6 +84,7 @@
       <option name="presentableId" value="Default" />
       <updated>1701695482115</updated>
       <workItem from="1702247688411" duration="2060000" />
+      <workItem from="1702312454320" duration="1150000" />
     </task>
     <task id="LOCAL-00001" summary="Adding assets for players and zombies (Sherif Omar)">
       <created>1702217415739</created>
