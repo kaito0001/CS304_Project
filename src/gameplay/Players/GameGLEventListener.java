@@ -8,11 +8,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Iterator;
 import Texture.*;
 import UI.Menus;
 import gameplay.zombies.Zombie;
+import com.sun.opengl.util.j2d.TextRenderer;
+
 
 public class GameGLEventListener extends AnimationListener {
     /*
@@ -71,7 +74,7 @@ public class GameGLEventListener extends AnimationListener {
             ,"Zombie//Zmove10.png","Zombie//Zmove11.png","Zombie//Zmove12.png","Zombie//Zmove13.png","Zombie//Zmove14.png"
             ,"Zombie//Zmove15.png","Zombie//Zmove16.png",
 
-            "Buttons/Pause.png","Views/Menus/Pause.png",
+            "Buttons/Pause.png","Views/Menus/Pause.png","Views/Menus/One_Player_Score.png","Views/Menus/Two_Players_Score.png",
 
 
             // backGround picture
@@ -240,9 +243,7 @@ public class GameGLEventListener extends AnimationListener {
         GL gl = glAutoDrawable.getGL();
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);
         gl.glLoadIdentity();
-
-            UI.currentPage(gl);
-
+        UI.currentPage(gl);
         if(UI.getCurrent().equals("game")) {
             if(!paused){
                 handleKeyPress(); // handle input
@@ -335,6 +336,7 @@ public class GameGLEventListener extends AnimationListener {
 //--------------------------------------------check collisions ------------------------//
             checkPlayerCollisions(player1);
             checkBulletCollision(player1);
+            renderScore(player1,100,700);
             if (UI.isMultiPlayer()) {
                 checkPlayerCollisions(player2);
                 checkBulletCollision(player2);
@@ -346,11 +348,38 @@ public class GameGLEventListener extends AnimationListener {
                 DrawSprite(gl, 50, 50, 49, 6, 7);
 
             }
+
+        }
+        if (UI.isMultiPlayer()){
+            if (!player1.isAlive()&&!player2.isAlive()) {
+                UI.setCurrent("multiScore");
+                UI.DrawBackGround(gl, 0, 0, 74);
+                renderScore(player1,63,59);
+                renderScore(player2,63,48);
+            }
+        }else{
+            if (!player1.isAlive()) {
+                UI.setCurrent("singleScore");
+                UI.DrawBackGround(gl, 0, 0, 73);
+                renderScore(player1,50,45);
+            }
         }
     }
     public void resetGame(){
-        player1.getBullets().clear();
-        player2.getBullets().clear();
+        player1 = new Player(21,40);
+        player2 = new Player(21,60);
+        zombies.clear();
+        Arrays.fill(check,0);
+    }
+    public void renderScore(Player player,int x,int y){
+        TextRenderer textRenderer;
+        textRenderer = new TextRenderer(new Font("Arial", 1, 7));
+        textRenderer.beginRendering(100, 100);
+        textRenderer.setColor(Color.WHITE);
+        textRenderer.setSmoothing(true);
+        textRenderer.draw("" + player.getScore(), x, y);
+        textRenderer.setColor(Color.white);
+        textRenderer.endRendering();
     }
 
     public void DrawBackGround(GL gl) {
@@ -554,6 +583,27 @@ public class GameGLEventListener extends AnimationListener {
             }
 //      ------------------------------handle help page buttons----------------------------
 
+
+//      ------------------------------handle score page buttons----------------------------
+            case "multiScore" -> {
+                if (xClick >= 53 && xClick <= 57 && yClick >= 31 && yClick <= 36) { // exit button has been clicked
+                    UI.setCurrent("home");
+                    resetGame();
+                }else if (xClick >= 41 && xClick <= 47 && yClick >= 31 && yClick <= 36) { // exit button has been clicked
+                    UI.setCurrent("game");
+                    resetGame();
+                }
+            } case "singleScore" -> {
+                if (xClick >= 53 && xClick <= 57 && yClick >= 31 && yClick <= 36) { // exit button has been clicked
+                    UI.setCurrent("home");
+                    resetGame();
+                }else if (xClick >= 41 && xClick <= 47 && yClick >= 31 && yClick <= 36) { // exit button has been clicked
+                    UI.setCurrent("game");
+                    resetGame();
+                }
+            }
+//      ------------------------------handle score page buttons----------------------------
+
 //      ------------------------------handle credits page buttons----------------------------
             case "about" -> {
                 if (xClick >= 64 && xClick <= 68 && yClick >= 76 && yClick <= 81) { // exit button has been clicked
@@ -565,7 +615,7 @@ public class GameGLEventListener extends AnimationListener {
 //      ------------------------------handle login credits buttons----------------------------
             case "login" -> {
                 if (xClick >= 67 && xClick <= 71 && yClick >= 75 && yClick <= 81) { // exit button has been clicked
-                    UI.setCurrent("home");
+                    UI.setCurrent("levels");
 
                 } else if (xClick >= 44 && xClick <= 53 && yClick >= 30 && yClick <= 36) { // start game has been pressed
                     UI.setCurrent("game");

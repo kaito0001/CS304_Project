@@ -69,9 +69,11 @@ public class Menus {
         }
         if (current.equals("login")) {
             DrawBackGround(gl, 0, 0, 41);
-            DrawSprite(gl, 50, 50, loginIndex, 6, 7);
+            DrawSprite(gl, 50, 47, loginIndex, 6, 7);
+
 
         }
+
     }
 //  -----------------------------------------------------check the current page and draw it -----------------------------------------
 
