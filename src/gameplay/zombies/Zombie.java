@@ -9,14 +9,12 @@ import javax.media.opengl.GL;
 public class Zombie {
     private final int MAX_WIDTH = 100, MAX_HEIGHT = 100;
     private double x, y;
-    private boolean alive;
-
+    private double direction;
 
 
     public Zombie(double x, double y) {
         this.x = x;
         this.y = y;
-        this.alive = true;
     }
     public double getX() {
         return x;
@@ -27,15 +25,27 @@ public class Zombie {
     }
 
 
-    public boolean isAlive() {
-        return alive;
+    public void Move(double PX, double PY, double speed) {
+
+        double dirX = PX - x;
+        double dirY = PY - y;
+
+        double distance = Math.sqrt(dirX * dirX + dirY * dirY);
+
+        if (distance > 0) {
+            dirX /= distance;
+            dirY /= distance;
+        }
+
+        x += dirX * speed;
+        y += dirY * speed;
+         direction = Math.toDegrees(Math.atan2(-dirY, -dirX));
     }
-    public void hit() {
-        alive = false;  // Set the zombie as not alive
+    public void setDirection(int direction) {
+        this.direction = direction;
     }
 
-
-    public void Move(double value) {
+    public void NMove(double value) {
         x -= value;
     }
 
@@ -49,9 +59,9 @@ public class Zombie {
         gl.glPushMatrix();
         gl.glTranslated( x/(MAX_WIDTH/2.0) - 1, y/(MAX_HEIGHT/2.0) - 1, 0);
         gl.glScaled(0.01*xScale, 0.01*yScale, 1);
-        //System.out.println(x +" " + y);
+        gl.glRotated(direction, 0, 0, 1);
         gl.glBegin(GL.GL_QUADS);
-        // Front Face
+
         gl.glTexCoord2f(0.0f, 0.0f);
         gl.glVertex3f(1f, -1f,-1f);
 
