@@ -25,13 +25,15 @@ public class GameGLEventListener extends AnimationListener {
     CLASS VARIABLES
     -----------------
      */
-    String S1 = "Player One";
-    String S2 = "Player Two";
+    public static String S1 = "Player One";
+    public static String S2 = "Player Two";
     Sound sound = new Sound();
     boolean paused=false;
     String pause="playing";
     boolean helpInGame=false;
     Menus UI = new Menus();
+
+    public static ArrayList<Player> scores = new ArrayList<>();
 
     // game timer
     private int timer = 0;
@@ -48,6 +50,9 @@ public class GameGLEventListener extends AnimationListener {
 
     Player player1 = new Player(21,40); // initiating player1 at position (21,40)
     Player player2 = new Player(21,60); // initiating player2 at position (21,60)
+
+    String teamName;
+    Player team;
 
     boolean playing = false;
 
@@ -80,7 +85,7 @@ public class GameGLEventListener extends AnimationListener {
             ,"Zombie//Zmove15.png","Zombie//Zmove16.png",
 
             "Buttons/Pause.png","Views/Menus/Pause.png","Views/Menus/One_Player_Score.png","Views/Menus/Two_Players_Score.png",
-            "Game//Player One Score and Lives.png" , "Game//Player Two Score and Lives.png" , "Game//Timer.png" ,
+            "Game//Player One Score and Lives.png" , "Game//Player Two Score and Lives.png" , "Game//Timer.png" ,"Buttons//High_Score.png","Views/Menus/High_Score.png",
 
 
             // backGround picture
@@ -92,7 +97,7 @@ public class GameGLEventListener extends AnimationListener {
     int[] player1Move = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,16, 17, 18, 19},
           player2Move = {20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39},
 
-            zombieMove  ={54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70};
+          zombieMove  ={54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70};
 
     int player1AnimationIndex = 0, player2AnimationIndex = 0; // players animation indexes to change pictures while moving
 
@@ -325,10 +330,8 @@ public class GameGLEventListener extends AnimationListener {
                 if (check[i] == 1) {
                     Zombie zombie= zombies.get(i);
                     if (zombie.getX() > 20) {
-                        zombieAnimationIndex %=17;
                         zombie.DrawZombie(gl,zombie.getX(),zombie.getY(),zombieMove[zombieAnimationIndex],10,10);
                         if (!paused) {
-                            zombieAnimationIndex++;
                             if (UI.getDifficulty().equals("easy")) {
                                 zombie.Move(0.2);
                             } else if (UI.getDifficulty().equals("medium")) {
@@ -382,14 +385,17 @@ public class GameGLEventListener extends AnimationListener {
             if (!player1.isAlive()&&!player2.isAlive()) {
                 UI.setCurrent("multiScore");
                 UI.DrawBackGround(gl, 0, 0, 74);
-                renderScore(player1,441,420);
-                renderScore(player2,441,345);
+                renderScore(player1,410,390);
+                renderScore(player2,410,299);
+                Render(textRenderer,275,445,S1,30);
+                Render(textRenderer,275,355,S2,30);
             }
         }else{
             if (!player1.isAlive()) {
                 UI.setCurrent("singleScore");
                 UI.DrawBackGround(gl, 0, 0, 73);
-                renderScore(player1,350,350);
+                renderScore(player1,405,334);
+                Render(textRenderer,275,400,S1,30);
             }
         }
     }
@@ -441,14 +447,26 @@ public class GameGLEventListener extends AnimationListener {
     }
 
     public void resetGame(){
+        if(UI.isMultiPlayer()) {
+            teamName = "team_" + player1.getName() + "&" + player2.getName();
+            team = new Player(0,0);
+            team.setName(teamName);
+            team.setScore(player1.getScore() + player2. getScore());
+            scores.add(team);
+        }
+        else{
+            scores.add(player1);
+        }
         player1 = new Player(21,40);
         player2 = new Player(21,60);
         zombies.clear();
         Arrays.fill(check,0);
+        S1 = "Player One";
+        S2 = "Player Two";
     }
     public void renderScore(Player player,int x,int y){
         TextRenderer textRenderer;
-        textRenderer = new TextRenderer(new Font("Arial", 1, 20));
+        textRenderer = new TextRenderer(new Font("Arial", 1, 40));
         textRenderer.beginRendering(700, 700);
         textRenderer.setColor(Color.WHITE);
         textRenderer.setSmoothing(true);
@@ -593,7 +611,6 @@ public class GameGLEventListener extends AnimationListener {
         // get click position
         int xClick = (int)((x / width) * 100);
         int yClick = 100 - (int)(100 * y / height);
-        System.out.println(xClick+","+yClick);
 
 
 //      ------------------------------handle home page buttons-------------------------------
@@ -604,10 +621,14 @@ public class GameGLEventListener extends AnimationListener {
                     playSE(2);
 
                 } else if (xClick >= 40 && xClick <= 57 && yClick <= 40 && yClick >= 35) {
-                    UI.setCurrent("help");
+                    UI.setCurrent("high score");
                     playSE(2);
 
                 } else if (xClick >= 40 && xClick <= 57 && yClick <= 30 && yClick >= 25) {
+                    UI.setCurrent("help");
+                    playSE(2);
+
+                } else if (xClick >= 40 && xClick <= 57 && yClick <= 20 && yClick >= 15) {
                     UI.setCurrent("about");
                     playSE(2);
 
@@ -619,7 +640,7 @@ public class GameGLEventListener extends AnimationListener {
                     playMusic(0);
                     playSE(2);
 
-                } else if (xClick >= 40 && xClick <= 57 && yClick <= 20 && yClick >= 15) {
+                } else if (xClick >= 40 && xClick <= 57 && yClick <= 10 && yClick >= 5) {
                     System.exit(0);
                     playSE(2);
                 }
@@ -682,7 +703,7 @@ public class GameGLEventListener extends AnimationListener {
 //      ---------------------------handle difficulty page buttons----------------------------
 
 //      ------------------------------handle help page buttons----------------------------
-            case "help" -> {
+            case "help" , "high score" -> {
                 if (xClick >= 69 && xClick <= 72 && yClick >= 77 && yClick <= 81) { // exit button has been clicked
                     UI.setCurrent("home");
                     playSE(2);
@@ -735,6 +756,8 @@ public class GameGLEventListener extends AnimationListener {
                     playSE(2);
                     stopMusic();
                     playMusic(1);
+                    player1.setName(S1);
+                    player2.setName(S2);
                 }
             }
             case "game" -> {

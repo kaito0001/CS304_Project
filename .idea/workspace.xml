@@ -4,36 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e5195603-3530-48d5-a70a-f76b21a806c8" name="Changes" comment="merged menus with players">
-      <change afterPath="$PROJECT_DIR$/src/gameplay/Players/HighScores.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_6_2023_8_57_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_6_2023_8_57_PM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_6_2023_9_03_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_6_2023_9_03_PM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_7_2023_1_00_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_12_7_2023_1_00_AM__Changes_.xml" afterDir="false" />
+    <list default="true" id="e5195603-3530-48d5-a70a-f76b21a806c8" name="Changes" comment="sound class and display data (sherif omar)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move0.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move10.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move11.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move12.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move13.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move14.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move15.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move16.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move17.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move18.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move19.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move6.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move7.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move8.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Player 2/P2move9.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Views/Menus/About_US.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Views/Menus/About_US.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Views/Menus/Help.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Views/Menus/Help.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Views/Menus/Pause.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Views/Menus/Pause.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/Menus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/Menus.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gameplay/Players/GameGLEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/Players/GameGLEventListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameplay/Players/HighScores.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gameplay/Players/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/Players/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,24 +24,12 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="making_player" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 0
-}</component>
-  <component name="ProjectId" id="2Z4y6nnYdqRXAhVAF3G4bJHozCb" />
+  <component name="ProjectId" id="2ZQcQEzZpXuCRkYqPla87NxQ4wn" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -75,106 +38,30 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/kaito/IdeaProjects/lastupdatesclone/src/gameplay/Players",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Material/CS304_Project&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+    "RunOnceActivity.ShowReadmeOnStart": "true"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\kaito\IdeaProjects\lastupdatesclone\src\gameplay\Players" />
-      <recent name="C:\Users\kaito\IdeaProjects\lastupdatesclone\src\UI" />
-      <recent name="D:\GunsGame\CS304_Project\src\Assets" />
-      <recent name="C:\Users\kaito\IdeaProjects\GunsGame\src\gameplay" />
-      <recent name="C:\Users\kaito\IdeaProjects\GunsGame\src\UI" />
-    </key>
-  </component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e5195603-3530-48d5-a70a-f76b21a806c8" name="Changes" comment="" />
-      <created>1701695482115</created>
+      <changelist id="e5195603-3530-48d5-a70a-f76b21a806c8" name="Changes" comment="sound class and display data (sherif omar)" />
+      <created>1702357727793</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1701695482115</updated>
-      <workItem from="1702247688411" duration="2060000" />
-      <workItem from="1702312454320" duration="1150000" />
-      <workItem from="1702318932678" duration="4779000" />
+      <updated>1702357727793</updated>
     </task>
-    <task id="LOCAL-00001" summary="Adding assets for players and zombies (Sherif Omar)">
-      <created>1702217415739</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1702217415739</updated>
-    </task>
-    <task id="LOCAL-00002" summary="merged menus with players">
-      <created>1702297806402</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1702297806402</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+  <component name="XDebuggerManager">
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="UI.Menus" memberName="scoresList" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="making_player" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="no pictures just 2 blocks firing bullets as blocks and the &quot;GameGLEventListener&quot; still needs some handling for performance&#10;  and clean code" />
-    <MESSAGE value="Adding assets for players and zombies (Sherif Omar)" />
-    <MESSAGE value="1- moved drawing function to the Player class&#10;2- added pictures of players and bullets&#10;3- handled fire spreading" />
-    <MESSAGE value="merged menus with players" />
-    <option name="LAST_COMMIT_MESSAGE" value="merged menus with players" />
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/lastupdatesclone$Animation.ic" NAME="Animation Coverage Results" MODIFIED="1702365798512" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>gameplay.Players.*</FILTER>
+    </SUITE>
   </component>
 </project>

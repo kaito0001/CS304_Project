@@ -14,6 +14,8 @@ public class Player {
      */
     private double x, y; // x and y position of the player
 
+    private String name;
+
     private int handleSpreading = 7; // keep 7 frames between bullets from the same player
 
     private int lives = 3; // initiating 3 lives for player
@@ -35,6 +37,14 @@ public class Player {
     Player(double x, double y) {
         this.x = x;
         this.y = y;
+    }
+
+    void setName(String name){
+        this.name = name;
+    }
+
+    public String getName(){
+        return name;
     }
 
     double getX() {
@@ -71,7 +81,10 @@ public class Player {
         score++;
     }
 
-    int getScore(){
+    public void setScore(int score){
+        this.score = score;
+    }
+    public int getScore(){
         return score;
     }
 
