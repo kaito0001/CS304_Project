@@ -7,6 +7,8 @@ import javax.media.opengl.GL;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import static gameplay.Players.GameGLEventListener.*;
 
@@ -63,11 +65,12 @@ public class Menus {
             DrawBackGround(gl, 0, 0, 41);
             DrawSprite(gl, 50, 50, 79, 6, 7);
             int h = 475;
+            Collections.sort(scores, Comparator.comparingInt(Player::getScore).reversed());
             for(Player player: scores) {
                 String score = player.getName() + " :  " + player.getScore();
                 textRenderer = new TextRenderer(new Font("Arial", 1, 20));
                 textRenderer.beginRendering(700, 700);
-                textRenderer.setColor(Color.WHITE);
+                textRenderer.setColor(Color.BLACK);
                 textRenderer.setSmoothing(true);
                 textRenderer.draw(score, 238, h);
                 textRenderer.setColor(Color.white);

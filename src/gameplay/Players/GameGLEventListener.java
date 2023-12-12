@@ -171,6 +171,7 @@ public class GameGLEventListener extends AnimationListener {
         if (isKeyPressed(KeyEvent.VK_L)) {
             if (player1.isGunReady()) { // check to let player1 fire or not
                 player1.fire();
+                playSE(3);
             }
         }
         player1.reloading();
@@ -212,6 +213,7 @@ public class GameGLEventListener extends AnimationListener {
                 if (isKeyPressed(KeyEvent.VK_G)) {
                     if (player2.isGunReady()) { // check to let player2 fire or not
                         player2.fire();
+                        playSE(3);
                     }
                 }
                 player2.reloading();
@@ -230,7 +232,7 @@ public class GameGLEventListener extends AnimationListener {
         GL gl = glAutoDrawable.getGL();
         gl.glClearColor(1.0f, 0f, 0f, 1.0f);    //This Will Clear The Background Color To Black
 
-        playMusic(0);
+//        playMusic(0);
 
         gl.glEnable(GL.GL_TEXTURE_2D);  // Enable Texture Mapping
         gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
@@ -743,17 +745,17 @@ public class GameGLEventListener extends AnimationListener {
                     playSE(2);
                 }
             }
-//            } case "singleScore" -> {
-//                if (xClick >= 53 && xClick <= 57 && yClick >= 31 && yClick <= 36) { // exit button has been clicked
-//                    UI.setCurrent("home");
-//                    resetGame();
-//                    playSE(2);
-//                }else if (xClick >= 41 && xClick <= 47 && yClick >= 31 && yClick <= 36) { // exit button has been clicked
-//                    UI.setCurrent("game");
-//                    resetGame();
-//                    playSE(2);
-//                }
-//            }
+             case "singleScore" -> {
+                if (xClick >= 53 && xClick <= 57 && yClick >= 31 && yClick <= 36) { // exit button has been clicked
+                    UI.setCurrent("home");
+                    resetGame();
+                    playSE(2);
+                }else if (xClick >= 41 && xClick <= 47 && yClick >= 31 && yClick <= 36) { // exit button has been clicked
+                    UI.setCurrent("game");
+                    resetGame();
+                    playSE(2);
+                }
+            }
 //      ------------------------------handle score page buttons----------------------------
 
 //      ------------------------------handle credits page buttons----------------------------
@@ -775,7 +777,7 @@ public class GameGLEventListener extends AnimationListener {
                     UI.setCurrent("game");
                     playSE(2);
                     stopMusic();
-                    playMusic(1);
+//                    playMusic(1);
                     player1.setName(S1);
                     player2.setName(S2);
                 }
@@ -801,6 +803,7 @@ public class GameGLEventListener extends AnimationListener {
                 paused = false;
                 pause="playing";
                 playSE(2);
+                stopMusic();
 
             }else if (xClick >= 38 && xClick <= 62 && yClick >= 56 && yClick <= 62){// resume button
                 paused=false;
@@ -813,12 +816,15 @@ public class GameGLEventListener extends AnimationListener {
                 pause="playing";
                 paused=false;
                 playSE(2);
-                playMusic(1);
+//                playMusic(1);
                 resetGame();
             }else if (xClick >= 51 && xClick <= 58 && yClick >= 32 && yClick <= 37){// mute button
                 stopMusic();
+                playSE(2);
             }else if (xClick >= 41 && xClick <= 48 && yClick >= 31 && yClick <= 37){//music button
                 stopMusic();
+                playSE(2);
+                playMusic(1);
             }
         }
         if (helpInGame){
