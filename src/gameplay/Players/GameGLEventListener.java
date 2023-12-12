@@ -344,11 +344,29 @@ public class GameGLEventListener extends AnimationListener {
                         if (!paused) {
                             if(UI.isMultiPlayer()){
                                 if (UI.getDifficulty().equals("easy")) {
-                                    zombie.NMove(0.5 + zombieSpeed);
+                                    if (player1.isAlive()&&player2.isAlive()) {
+                                        zombie.Move2(player1.getX(), player1.getY(), player2.getX(), player2.getY(), 0.5 + zombieSpeed);
+                                    }else if (player1.isAlive()){
+                                        zombie.Move(player1.getX(),player1.getY(),0.5 + zombieSpeed);
+                                    }else if (player2.isAlive()){
+                                        zombie.Move(player2.getX(),player2.getY(),.5 + zombieSpeed);
+                                    }
                                 } else if (UI.getDifficulty().equals("medium")) {
-                                    zombie.NMove(0.7 + zombieSpeed);
+                                    if (player1.isAlive()&&player2.isAlive()) {
+                                        zombie.Move2(player1.getX(), player1.getY(), player2.getX(), player2.getY(), 0.7 + zombieSpeed);
+                                    }else if (player1.isAlive()){
+                                        zombie.Move(player1.getX(),player1.getY(),0.7 + zombieSpeed);
+                                    }else if (player2.isAlive()){
+                                        zombie.Move(player2.getX(),player2.getY(),0.7 + zombieSpeed);
+                                    }
                                 } else if (UI.getDifficulty().equals("hard")) {
-                                    zombie.NMove(1 + zombieSpeed);
+                                    if (player1.isAlive()&&player2.isAlive()) {
+                                        zombie.Move2(player1.getX(), player1.getY(), player2.getX(), player2.getY(), 1 + zombieSpeed);
+                                    }else if (player1.isAlive()){
+                                        zombie.Move(player1.getX(),player1.getY(),1 + zombieSpeed);
+                                    }else if (player2.isAlive()){
+                                        zombie.Move(player2.getX(),player2.getY(),1 + zombieSpeed);
+                                    }
                                 }
                             }
                             else {
