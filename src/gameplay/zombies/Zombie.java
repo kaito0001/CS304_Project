@@ -41,14 +41,23 @@ public class Zombie {
         y += dirY * speed;
          direction = Math.toDegrees(Math.atan2(-dirY, -dirX));
     }
-    public void setDirection(int direction) {
-        this.direction = direction;
+    public void Move2(double player1X, double player1Y, double player2X, double player2Y, double speed) {
+        // Calculate the average position of the two players
+        double distanceToPlayer1 = calculateDistance(player1X, player1Y);
+        double distanceToPlayer2 = calculateDistance(player2X, player2Y);
+
+        if (distanceToPlayer1 < distanceToPlayer2) {
+            Move(player1X, player1Y, speed);
+        } else {
+            Move(player2X, player2Y, speed);
+        }
     }
 
-    public void NMove(double value) {
-        x -= value;
+    private double calculateDistance(double targetX, double targetY) {
+        double dirX = targetX - x;
+        double dirY = targetY - y;
+        return Math.sqrt(dirX * dirX + dirY * dirY);
     }
-
 
 
 
