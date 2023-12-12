@@ -62,10 +62,10 @@ public class Menus {
         if (current.equals("high score")){
             DrawBackGround(gl, 0, 0, 41);
             DrawSprite(gl, 50, 50, 79, 6, 7);
-            int h = 500;
+            int h = 475;
             for(Player player: scores) {
                 String score = player.getName() + " :  " + player.getScore();
-                textRenderer = new TextRenderer(new Font("Arial", 1, 40));
+                textRenderer = new TextRenderer(new Font("Arial", 1, 20));
                 textRenderer.beginRendering(700, 700);
                 textRenderer.setColor(Color.WHITE);
                 textRenderer.setSmoothing(true);

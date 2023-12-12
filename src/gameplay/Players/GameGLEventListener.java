@@ -39,6 +39,9 @@ public class GameGLEventListener extends AnimationListener {
     private int timer = 0;
     private int timerHandler = 0;
 
+    // levelUp
+    double zombieSpeed = 0;
+
     public static final int MAX_WIDTH = 100, MAX_HEIGHT = 100; // set max height and width to translate sprites using integers
 
 
@@ -121,6 +124,9 @@ public class GameGLEventListener extends AnimationListener {
         if(timerHandler == 24){
             timer++;
             timerHandler = 0;
+            if(timer % 10 == 0){
+                zombieSpeed += 0.04;
+            }
         }
     }
     
@@ -278,7 +284,7 @@ public class GameGLEventListener extends AnimationListener {
                 if (bullet.getX() < MAX_WIDTH) { // if bullet is still in the screen draw it then increment its x for next frame
                     bullet.drawBullet(gl, bullet.getX(), bullet.getY(), 40, 3, 3);
                    if (!paused){
-                       bullet.move(1);
+                       bullet.move(1.5);
                    }
 
                 } else { // if not then remove the bullet to lower sources usage (performance)
@@ -332,12 +338,23 @@ public class GameGLEventListener extends AnimationListener {
                     if (zombie.getX() > 20) {
                         zombie.DrawZombie(gl,zombie.getX(),zombie.getY(),zombieMove[zombieAnimationIndex],10,10);
                         if (!paused) {
-                            if (UI.getDifficulty().equals("easy")) {
-                                zombie.Move(0.2);
-                            } else if (UI.getDifficulty().equals("medium")) {
-                                zombie.Move(0.5);
-                            } else if (UI.getDifficulty().equals("hard")) {
-                                zombie.Move(1);
+                            if(UI.isMultiPlayer()){
+                                if (UI.getDifficulty().equals("easy")) {
+                                    zombie.NMove(0.5 + zombieSpeed);
+                                } else if (UI.getDifficulty().equals("medium")) {
+                                    zombie.NMove(0.7 + zombieSpeed);
+                                } else if (UI.getDifficulty().equals("hard")) {
+                                    zombie.NMove(1 + zombieSpeed);
+                                }
+                            }
+                            else {
+                                if (UI.getDifficulty().equals("easy")) {
+                                    zombie.Move(player1.getX(),player1.getY(),0.2 + zombieSpeed);
+                                } else if (UI.getDifficulty().equals("medium")) {
+                                    zombie.Move(player1.getX(),player1.getY(),0.4 + zombieSpeed);
+                                } else if (UI.getDifficulty().equals("hard")) {
+                                    zombie.Move(player1.getX(),player1.getY(),0.7 + zombieSpeed);
+                                }
                             }
                         }
 //                    System.out.println(zombieAnimationIndex);
@@ -350,10 +367,12 @@ public class GameGLEventListener extends AnimationListener {
 
 
 //--------------------------------------------check collisions ------------------------//
-            checkPlayerCollisions(player1);
-            checkBulletCollision(player1);
+            if(player1.isAlive()) {
+                checkPlayerCollisions(player1);
+                checkBulletCollision(player1);
+            }
             renderScore(player1,100,700);
-            if (UI.isMultiPlayer()) {
+            if (UI.isMultiPlayer() && player2.isAlive()) {
                 checkPlayerCollisions(player2);
                 checkBulletCollision(player2);
             }
@@ -718,22 +737,23 @@ public class GameGLEventListener extends AnimationListener {
                     UI.setCurrent("home");
                     resetGame();
                     playSE(2);
-                }else if (xClick >= 41 && xClick <= 47 && yClick >= 31 && yClick <= 36) { // exit button has been clicked
-                    UI.setCurrent("game");
-                    resetGame();
-                    playSE(2);
-                }
-            } case "singleScore" -> {
-                if (xClick >= 53 && xClick <= 57 && yClick >= 31 && yClick <= 36) { // exit button has been clicked
-                    UI.setCurrent("home");
-                    resetGame();
-                    playSE(2);
-                }else if (xClick >= 41 && xClick <= 47 && yClick >= 31 && yClick <= 36) { // exit button has been clicked
+                } else if (xClick >= 41 && xClick <= 47 && yClick >= 31 && yClick <= 36) { // exit button has been clicked
                     UI.setCurrent("game");
                     resetGame();
                     playSE(2);
                 }
             }
+//            } case "singleScore" -> {
+//                if (xClick >= 53 && xClick <= 57 && yClick >= 31 && yClick <= 36) { // exit button has been clicked
+//                    UI.setCurrent("home");
+//                    resetGame();
+//                    playSE(2);
+//                }else if (xClick >= 41 && xClick <= 47 && yClick >= 31 && yClick <= 36) { // exit button has been clicked
+//                    UI.setCurrent("game");
+//                    resetGame();
+//                    playSE(2);
+//                }
+//            }
 //      ------------------------------handle score page buttons----------------------------
 
 //      ------------------------------handle credits page buttons----------------------------
@@ -772,6 +792,8 @@ public class GameGLEventListener extends AnimationListener {
 
 
         }
+
+
 //      --------------------------------------- handel pause button ----------------------------------------------------
         if (pause.equals("pause")&&!helpInGame) {
             if (xClick >= 63 && xClick <= 69 && yClick >= 78 && yClick <= 83) { // exit button has been clicked
