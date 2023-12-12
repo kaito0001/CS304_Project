@@ -120,12 +120,14 @@ public class GameGLEventListener extends AnimationListener {
      */
 
     void handleTimer(){
-        timerHandler++;
-        if(timerHandler == 24){
-            timer++;
-            timerHandler = 0;
-            if(timer % 10 == 0){
-                zombieSpeed += 0.04;
+        if(!paused) {
+            timerHandler++;
+            if (timerHandler == 24) {
+                timer++;
+                timerHandler = 0;
+                if (timer % 10 == 0) {
+                    zombieSpeed += 0.04;
+                }
             }
         }
     }
