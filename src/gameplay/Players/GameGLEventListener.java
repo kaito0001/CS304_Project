@@ -484,6 +484,8 @@ public class GameGLEventListener extends AnimationListener {
         Arrays.fill(check,0);
         S1 = "Player One";
         S2 = "Player Two";
+        timer = 0;
+        timerHandler = 0;
     }
     public void renderScore(Player player,int x,int y){
         TextRenderer textRenderer;

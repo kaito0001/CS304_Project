@@ -26,7 +26,7 @@ public class Animation extends JFrame {
         animator.add(glcanvas);
         animator.start();
 
-        setTitle("Anim Test");
+        setTitle("Guns");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 700);
         setLocationRelativeTo(null);

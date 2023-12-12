@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e5195603-3530-48d5-a70a-f76b21a806c8" name="Changes" comment="increase zombie speed with time and handle highest scores display">
+    <list default="true" id="e5195603-3530-48d5-a70a-f76b21a806c8" name="Changes" comment="last changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/Menus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/Menus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/Sound.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/Sound.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameplay/Players/Animation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/Players/Animation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gameplay/Players/GameGLEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameplay/Players/GameGLEventListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -71,13 +70,21 @@
       <option name="project" value="LOCAL" />
       <updated>1702378581768</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="last changes">
+      <created>1702380174249</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1702380174249</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fixed display and added highest scores page" />
     <MESSAGE value="increase zombie speed with time and handle highest scores display" />
-    <option name="LAST_COMMIT_MESSAGE" value="increase zombie speed with time and handle highest scores display" />
+    <MESSAGE value="last changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="last changes" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
